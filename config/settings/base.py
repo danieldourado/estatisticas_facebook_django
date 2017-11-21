@@ -55,6 +55,8 @@ THIRD_PARTY_APPS = [
 LOCAL_APPS = [
     # custom users app
     'estatisticas_facebook.users.apps.UsersConfig',
+    'estatisticas_facebook.pages.apps.PagesConfig',
+    
     # Your stuff: custom apps go here
 ]
 

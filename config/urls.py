@@ -17,7 +17,7 @@ urlpatterns = [
     url(r'^accounts/', include('allauth.urls')),
 
     # Your stuff: custom urls includes go here
-
+    url(r'^pages/', include('estatisticas_facebook.pages.urls', namespace='pages')),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
