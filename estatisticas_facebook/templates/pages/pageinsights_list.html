@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block head_title %} PageInsights | {{ block.super}}{% endblock head_title %} 
+
+{% block content %}
+<h1>PageInsights de </h1>
+    <ul>
+        {% for obj in object_list %}
+            <li><a href='/page/insights/{{ obj.slug}}/'>{{obj}}</a><br/>
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock content %}
