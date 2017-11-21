@@ -1,7 +1,7 @@
 Estatisticas Facebook
 =====================
 
-Este sistema tem como objetivo capturar informações sobre reações de posts no Facebook. Ele coleta dados de análise de páginas que você possui permissão para coletar, e os armazena para futura análise em um banco de dados.
+Este sistema tem como objetivo capturar informações sobre insights de páginas do Facebook. Ele coleta dados de análise de páginas que você possui permissão para coletar, e os armazena para futura análise em um banco de dados.
 
 .. image:: https://img.shields.io/badge/built%20with-Cookiecutter%20Django-ff69b4.svg
      :target: https://github.com/pydanny/cookiecutter-django/
