@@ -1,7 +1,9 @@
 from django.contrib import admin
 from pages.models import Page, PageInsights
 
-# Register your models here.
-admin.site.register(Page)
-admin.site.register(PageInsights)
+class PageAdmin(admin.ModelAdmin):
+    readonly_fields = ('created',)
 
+# Register your models here.
+admin.site.register(Page,PageAdmin)
+admin.site.register(PageInsights)
