@@ -93,7 +93,3 @@ class PageExtractView(ListView):
                     page_id=self.kwargs['pk'])
                 page_insights.save()
         return context
-        
-
-
-    

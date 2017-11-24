@@ -49,6 +49,7 @@ THIRD_PARTY_APPS = [
     'allauth',  # registration
     'allauth.account',  # registration
     'allauth.socialaccount',  # registration
+    'django_csv_exports',
 ]
 
 # Apps specific for this project go here.
@@ -63,7 +64,7 @@ LOCAL_APPS = [
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 
-ALLOWED_HOSTS = ['danieldourado-cookiecutter-django-danieldourado.c9users.io']
+ALLOWED_HOSTS = ['danieldourado-cookiecutter-django-danieldourado.c9users.io', '10.1.0.230']
 
 
 # MIDDLEWARE CONFIGURATION
