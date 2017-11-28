@@ -15,9 +15,9 @@ urlpatterns = [
         name='detail'
     ),
     url(
-        regex=r'^page/extract/(?P<pk>\w+)/$',
-        view= PageExtractView.as_view(),
-        name='extract'
+        regex=r'^page/insights/extract/(?P<pk>\w+)/$',
+        view= PageInsightsExtractView.as_view(),
+        name='insights-extract'
     ),
     url(
         regex=r'^page/insights/erase-all/',

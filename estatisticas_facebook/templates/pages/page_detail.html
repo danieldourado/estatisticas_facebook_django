@@ -5,8 +5,12 @@
 {% endblock head_title %} 
 
 {% block content %}
-<h1>{{ object }}</h1> 
+<h1>{{ object.pretty_name }}</h1>
 <p>Criado: {{ object.created }}</p>
+<p>Short name: {{ object.name }}</p>
+
     
-{{ block.super }}
+<a href="{% url 'pages:insights-extract' pk=object.pk %}" class="btn btn-info" role="button">Extrair insights</a>
+<a href="{% url 'pages:erase-all-pages' %}" class="btn btn-danger" role="button">Apagar</a>
+
 {% endblock content %}

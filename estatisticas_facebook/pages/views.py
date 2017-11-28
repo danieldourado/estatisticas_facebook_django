@@ -7,6 +7,7 @@ from django.http import HttpResponse
 from django.db.models import Q
 from .forms import PageCreateForm
 from django.core.urlresolvers import reverse
+from pages.facebook_crawler import getPageInfo
 
 # Create your views here.
 
@@ -57,6 +58,7 @@ class PageCreateView(CreateView):
     form_class = PageCreateForm
     template_name = 'pages/form.html'
     def get_success_url(self):
+        getPageInfo(self.object)
         return reverse('pages:detail',args=(self.object.slug,))
    
 
@@ -76,7 +78,7 @@ class PageInsightsListView(ListView):
 class PageInsightsDetailView(DetailView):
     queryset = PageInsights.objects.all()
 
-class PageExtractView(ListView):    
+class PageInsightsExtractView(ListView):    
     model = Page
     #template_name = "estatisticas_facebook/page_detail.html"
     
