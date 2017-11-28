@@ -40,6 +40,19 @@ class PageListView(ListView):
     
     queryset = Page.objects.all()
 
+class PageDetailView(DetailView):
+   
+    template_name = 'pages/page_detail.html'
+   
+    def get_queryset(self):
+        print(self.kwargs)
+        slug = self.kwargs.get("slug")
+        if slug:
+            queryset = queryset = Page.objects.filter(slug__iexact=slug)
+        else:
+            queryset = Page.objects.all()
+        return queryset
+   
 
 class PageInsightsListView(ListView):
     template_name = 'pages/pageinsights_list.html'
@@ -61,7 +74,7 @@ class PageCreateView(CreateView):
     form_class = PageCreateForm
     template_name = 'pages/form.html'
     def get_success_url(self):
-        return reverse('pages:extract',args=(self.object.id,))
+        return reverse('pages:detail',args=(self.object.id,))
 
 class PageExtractView(ListView):    
     model = Page

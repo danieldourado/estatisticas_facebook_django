@@ -7,10 +7,10 @@
 {% block content %}
 
     {% for obj in object_list %}
-    <a href="{% url 'pages:insights-list' slug=obj.slug %}"><p> Page insights de {{ obj.slug }}</p></a>
+    <a href="{% url 'pages:detail' slug=obj.slug %}"><p>{{ obj.slug }}</p></a>
     {% endfor %}
-    
-    <a href="{% url 'pages:create' %}" class="btn btn-info" role="button">Extrair Insights de página</a>
+   
+    <a href="{% url 'pages:create' %}" class="btn btn-info" role="button">Criar nova página</a>
     <a href="{% url 'pages:erase-all-pages' %}" class="btn btn-info" role="button">Apagar todas as páginas</a>
 
 {% endblock content %}

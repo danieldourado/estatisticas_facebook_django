@@ -5,13 +5,8 @@
 {% endblock head_title %} 
 
 {% block content %}
-<p>{{pagedata}}</p>
-<p>fsdfsdfsdf</p> 
-    {% for obj in object_list %}
-    <li>
-        {{ obj }}
-
-    </li>
-    {% endfor %}
-    {{ block.super }}
+<h1>{{ object }}</h1> 
+<p>Criado: {{ object.created }}</p>
+    
+{{ block.super }}
 {% endblock content %}

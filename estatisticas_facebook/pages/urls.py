@@ -1,6 +1,6 @@
 from django.conf.urls import url
 
-from pages.views import PageListView, PageView, PageCreateView,  PageExtractView, eraseAllPageinsights, eraseAllPages, PageInsightsDetailView, PageInsightsListView
+from pages.views import *
 
 urlpatterns = [
 
@@ -8,6 +8,11 @@ urlpatterns = [
         regex=r'^create/$',
         view= PageCreateView.as_view(),
         name='create'
+    ),
+    url(
+        regex=r'^detail/(?P<slug>[\w-]+)/$',
+        view= PageDetailView.as_view(),
+        name='detail'
     ),
     url(
         regex=r'^page/extract/(?P<pk>\w+)/$',
