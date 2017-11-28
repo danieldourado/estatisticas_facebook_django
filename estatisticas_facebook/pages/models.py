@@ -8,9 +8,7 @@ from django.utils.dateformat import DateFormat, TimeFormat
 class Page(models.Model):
     name            = models.CharField(max_length = 4000)
     pretty_name     = models.CharField(max_length = 4000,null=True, blank=True)
-    paging_next     = models.CharField(max_length = 4000,null=True, blank=True)
     access_token    = models.CharField(max_length = 4500,null=True, blank=True)
-    since           = models.DateField()
     created         = models.DateTimeField(auto_now_add=True)
     slug            = models.SlugField(null=True, blank=True)
 

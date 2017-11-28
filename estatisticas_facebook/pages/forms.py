@@ -8,5 +8,4 @@ class PageCreateForm(forms.ModelForm):
         fields = [
             'name',
             'access_token',
-            'since',
             ]
