@@ -9,3 +9,7 @@ class PageCreateForm(forms.ModelForm):
             'name',
             'access_token',
             ]
+            
+class PageInsightsCreateForm(forms.Form):
+    access_token = forms.CharField()
+    since = forms.DateField()

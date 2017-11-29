@@ -5,12 +5,19 @@
 {% endblock head_title %} 
 
 {% block content %}
+<h1>Páginas</h1>
+<a href="{% url 'pages:create' %}" class="btn btn-info" role="button">Criar</a>
 
+<table class="table  table-sm table-striped">
+<tbody>
     {% for obj in object_list %}
-    <a href="{% url 'pages:detail' slug=obj.slug %}"><p>{{ obj.slug }}</p></a>
+        <tr>
+            <td><a href="{% url 'pages:detail' pk=obj.id %}"><p>{{ obj.pretty_name }}</p></a></td>
+        </tr>
     {% endfor %}
-   
-    <a href="{% url 'pages:create' %}" class="btn btn-info" role="button">Criar nova página</a>
-    <a href="{% url 'pages:erase-all-pages' %}" class="btn btn-info" role="button">Apagar todas as páginas</a>
+</tbody>
+</table>
+
+
 
 {% endblock content %}

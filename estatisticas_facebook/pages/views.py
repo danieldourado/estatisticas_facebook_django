@@ -3,11 +3,11 @@ from django.views.generic import TemplateView, ListView, DetailView, CreateView
 from pages.models import Page, PageInsights
 import facebook
 import json
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.db.models import Q
-from .forms import PageCreateForm
+from .forms import *
 from django.core.urlresolvers import reverse
-from pages.facebook_crawler import getPageInfo
+from pages.facebook_crawler import *
 
 # Create your views here.
 
@@ -31,14 +31,21 @@ def eraseModelAndReturnHttpResponse(model):
 class PageDetailView(DetailView):
    
     template_name = 'pages/page_detail.html'
-   
+
+    def get_context_data(self, **kwargs):
+        context = super(PageDetailView, self).get_context_data(**kwargs)
+        print(self.kwargs.get("pk"))
+        context['page_insights'] = PageInsights.objects.filter(page__id__iexact=self.kwargs.get("pk")).count()
+        print(context)
+        return context
+        
     def get_queryset(self):
-        print(self.kwargs)
-        slug = self.kwargs.get("slug")
-        if slug:
-            queryset = queryset = Page.objects.filter(slug__iexact=slug)
+        pk = self.kwargs.get("pk")
+        if pk:
+            queryset = queryset = Page.objects.filter(id__iexact=pk)
         else:
             queryset = Page.objects.all()
+            
         return queryset
 
 class PageListView(ListView):
@@ -58,9 +65,7 @@ class PageCreateView(CreateView):
     form_class = PageCreateForm
     template_name = 'pages/form.html'
     def get_success_url(self):
-        getPageInfo(self.object)
         return reverse('pages:detail',args=(self.object.slug,))
-   
 
 class PageInsightsListView(ListView):
     template_name = 'pages/pageinsights_list.html'
@@ -75,6 +80,25 @@ class PageInsightsListView(ListView):
             queryset = PageInsights.objects.none()
         return queryset
 
+
+def PageInsightsCreateView(request, **kwargs):
+    form = PageInsightsCreateForm(request.POST or None)
+    template_name = 'pages/pageinsights_form.html'
+    errors = None
+    if form.is_valid():
+        args = kwargs
+        args['since'] = form.cleaned_data.get('since')
+        args['access_token'] = form.cleaned_data.get('access_token')
+        getPageInsights(args)
+        
+        return HttpResponseRedirect(reverse('pages:detail',kwargs={'pk': kwargs['id']}));
+    
+    if form.errors:
+        errors = form.errors
+    
+    context = {"form": form, "errors": errors}
+    return render(request, template_name, context)
+
 class PageInsightsDetailView(DetailView):
     queryset = PageInsights.objects.all()
 
@@ -84,14 +108,14 @@ class PageInsightsExtractView(ListView):
     
     def get_context_data(self, **kwargs):
         
-        context = super(PageExtractView, self).get_context_data( **kwargs)
+        context = super(PageInsightsExtractView, self).get_context_data( **kwargs)
         pagename = Page.objects.get(pk=self.kwargs['pk'])
   
         #token = 'EAACEdEose0cBAD6KsQvpVng9vUXf2xzVVTZAX2BwoX3bpRRg9RIfZAg88V3ZBT3P8nrDdiND9TuqN6E4fUhI27WOeATc8ZCRXFttxWt4dFrZCweSJg5Qx0ZCtaRLRa93HDuyZADKDRkb95DqOtbsqXmOMhaoZBbj0qQXgXw7hlZC7I4n37u1m7eKkimGThgWBtNIZD'
         token = Page.objects.get(pk=self.kwargs['pk']).access_token
         since = Page.objects.get(pk=self.kwargs['pk']).since
         graph = facebook.GraphAPI(token)
-
+        return
         raw_json = graph.get_object(pagename.name+'/insights?period=day&metric=page_fan_adds_unique,page_impressions_unique,page_engaged_users,page_stories,page_storytellers&since='+str(since))
         pagedata = raw_json['data']
 
