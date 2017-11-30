@@ -1,13 +1,9 @@
 {% extends "base.html" %}
+{% load render_table from django_tables2 %}
 
 {% block head_title %} PageInsights | {{ block.super}}{% endblock head_title %} 
 
 {% block content %}
-<h1>PageInsights de </h1>
-    <ul>
-        {% for obj in object_list %}
-            <li><a href='/page/insights/{{ obj.slug}}/'>{{obj}}</a><br/>
-            </li>
-        {% endfor %}
-    </ul>
+<h1>PageInsights de {{page_name}}</h1>
+    {% render_table table %}
 {% endblock content %}

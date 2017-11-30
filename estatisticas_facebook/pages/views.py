@@ -8,6 +8,8 @@ from django.db.models import Q
 from .forms import *
 from django.core.urlresolvers import reverse
 from pages.facebook_crawler import *
+from .tables import *
+from django_tables2 import RequestConfig
 
 # Create your views here.
 
@@ -67,18 +69,16 @@ class PageCreateView(CreateView):
     def get_success_url(self):
         return reverse('pages:detail',args=(self.object.slug,))
 
-class PageInsightsListView(ListView):
-    template_name = 'pages/pageinsights_list.html'
-    def get_queryset(self):
-        print(self.kwargs)
-        slug = self.kwargs.get("slug")
-        if slug:
-            queryset = PageInsights.objects.filter(
-                Q(page__slug__iexact=slug)
-            )
-        else:
-            queryset = PageInsights.objects.none()
-        return queryset
+def PageInsightsListView(request, id):
+
+    page_name = Page.objects.get(id__iexact = id).pretty_name
+    
+    queryset = PageInsights.objects.filter(Q(page__id__iexact=id))
+    table = PageInsightsTable(queryset)
+
+    RequestConfig(request).configure(table)
+    
+    return render(request, 'pages/pageinsights_list.html', {'table': table, 'page_name': page_name})
 
 
 def PageInsightsCreateView(request, **kwargs):

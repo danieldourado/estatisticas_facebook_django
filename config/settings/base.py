@@ -50,6 +50,7 @@ THIRD_PARTY_APPS = [
     'allauth.account',  # registration
     'allauth.socialaccount',  # registration
     'django_csv_exports',
+    'django_tables2',
 ]
 
 # Apps specific for this project go here.
@@ -181,6 +182,7 @@ TEMPLATES = [
                 'django.template.context_processors.static',
                 'django.template.context_processors.tz',
                 'django.contrib.messages.context_processors.messages',
+                'django.template.context_processors.request',
                 # Your stuff: custom template context processors go here
             ],
         },

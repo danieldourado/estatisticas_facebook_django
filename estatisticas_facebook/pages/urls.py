@@ -25,22 +25,22 @@ urlpatterns = [
         name='list'
     ),
     url(
-        regex=r'^pageInsights/create/(?P<id>\w+)/$',
+        regex=r'^page_insights/create/(?P<id>\w+)/$',
         view= PageInsightsCreateView,
         name='insights-create'
     ),
     url(
-        regex=r'^pageInsights/extract/(?P<id>\w+)/$',
+        regex=r'^page_insights/extract/(?P<id>\w+)/$',
         view= PageInsightsExtractView.as_view(),
         name='insights-extract'
     ),
     url(
-        regex=r'^pageInsights/(?P<id>\w+)/$',
-        view= PageInsightsListView.as_view(),
+        regex=r'^page_insights/(?P<id>\w+)/$',
+        view= PageInsightsListView,
         name='insights-list'
     ),
     url(
-        regex=r'^pageInsights/erase-all/',
+        regex=r'^page_insights/erase-all/',
         view= eraseAllPageinsights,
         name='erase-all-insights'
     ),
