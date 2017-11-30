@@ -7,7 +7,7 @@ from django.utils.dateformat import DateFormat, TimeFormat
 
 # Create your models here.
 class Page(models.Model):
-    id              = models.IntegerField(primary_key = True)
+    id              = models.CharField(primary_key = True, max_length = 45)
     name            = models.CharField(max_length = 4000, unique=True)
     pretty_name     = models.CharField(max_length = 4000,null=True, blank=True)
     access_token    = models.CharField(max_length = 4500,null=True, blank=True)
