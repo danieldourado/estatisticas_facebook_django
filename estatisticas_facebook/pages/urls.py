@@ -20,6 +20,11 @@ urlpatterns = [
         name='list'
     ),
     url(
+        regex=r'^page/erase/(?P<id>\w+)/$',
+        view= ErasePage,
+        name='erase-page'
+    ),
+    url(
         regex=r'^page/',
         view= PageListView.as_view(),
         name='list'
@@ -28,11 +33,6 @@ urlpatterns = [
         regex=r'^page_insights/create/(?P<id>\w+)/$',
         view= PageInsightsCreateView,
         name='insights-create'
-    ),
-    url(
-        regex=r'^page_insights/extract/(?P<id>\w+)/$',
-        view= PageInsightsExtractView.as_view(),
-        name='insights-extract'
     ),
     url(
         regex=r'^page_insights/(?P<id>\w+)/$',
@@ -49,6 +49,7 @@ urlpatterns = [
         view= eraseAllPages,
         name='erase-all-pages'
     ),
+    
     #url(r'^page/insights/$', PageInsightsListView.as_view()),
     
     #url(r'^page/index/(?P<slug>\w+)/$', PageListView.as_view()),
