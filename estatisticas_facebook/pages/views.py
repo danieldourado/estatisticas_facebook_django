@@ -78,7 +78,7 @@ def PageInsightsListView(request, id):
 
     RequestConfig(request).configure(table)
     
-    return render(request, 'pages/pageinsights_list.html', {'table': table, 'page_name': page_name})
+    return render(request, 'pages/pageinsights_list.html', {'table': table, 'page_name': page_name, 'id':id})
 
 
 def PageInsightsCreateView(request, **kwargs):

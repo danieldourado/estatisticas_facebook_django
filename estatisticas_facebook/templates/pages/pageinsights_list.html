@@ -4,6 +4,7 @@
 {% block head_title %} PageInsights | {{ block.super}}{% endblock head_title %} 
 
 {% block content %}
-<h1>PageInsights de {{page_name}}</h1>
+<h2>PageInsights de {{page_name}}</h2>
+<a href="{% url 'pages:detail' pk=id %}" class="btn btn-info" role="button">Voltar</a>
     {% render_table table %}
 {% endblock content %}
