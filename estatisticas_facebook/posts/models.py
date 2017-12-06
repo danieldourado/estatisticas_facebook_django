@@ -1,8 +1,7 @@
 from django.db import models
 from pages.models import Page
-from django.db.models.signals import pre_save, post_save
-from pages.utils import unique_slug_generator
 from django.utils.dateformat import DateFormat, TimeFormat
+from django.core.urlresolvers import reverse
 
 
 class Post(models.Model):
@@ -23,7 +22,7 @@ class Post(models.Model):
     message                         = models.CharField(max_length = 4500)
     permalink_url                   = models.CharField(max_length = 4500)
     created                         = models.DateTimeField(auto_now_add=True)
-    slug                            = models.SlugField(null=True, blank=True)
+    name                            = models.SlugField(null=True, blank=True)
 
     def __str__(self):
         return self.id
@@ -32,8 +31,6 @@ class Post(models.Model):
     def title(self):
         return self.id
 
-def slug_pre_save_reciever(sender, instance, *args, **kwargs):
-    if not instance.slug:
-        instance.slug = unique_slug_generator(instance)
+    def get_absolute_url(self):
+        return reverse('posts:detail', args=[str(self.id)])
 
-pre_save.connect(slug_pre_save_reciever, sender=Post)
