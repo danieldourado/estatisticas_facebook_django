@@ -35,3 +35,6 @@ def getPageInsights(args):
                 value=value['value'], 
                 page_id=args['id'])
             page_insights.save()
+
+def getPosts(args):
+    return
