@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1>Lista</h1>
+    <h1>Posts</h1>
     <a href="{% url 'posts:create' %}">Criar</a>
     <ul>
         {% for object in object_list %}

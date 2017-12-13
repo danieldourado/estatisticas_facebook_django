@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block head_title %} 
+    Pages | {{ block.super}}
+{% endblock head_title %} 
+
+{% block content %}
+    <h2>Adicionar Página</h2>
+    
+    <form method='POST'>{% csrf_token %}
+        <input class="form-control" type='text' name='name' placeholder="Slug da página"><br/>
+        <input class="form-control" type='text' name='access_token' placeholder="Access Token"><br/>
+        <input class="form-control" name='since' placeholder="Data (2016-12-31)" ><br/>
+        <button class="btn" type='submit'>Salvar</button>
+    </form>
+    
+{% endblock content %}

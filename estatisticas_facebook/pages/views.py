@@ -35,8 +35,6 @@ def ErasePage(request, id):
     
 class PageDetailView(DetailView):
    
-    template_name = 'pages/page_detail.html'
-
     def get_context_data(self, **kwargs):
         context = super(PageDetailView, self).get_context_data(**kwargs)
         print(self.kwargs.get("pk"))
@@ -54,7 +52,6 @@ class PageDetailView(DetailView):
         return queryset
 
 class PageListView(ListView):
-    template_name = 'pages/page_list.html'
     def get_queryset(self):
         print(self.kwargs)
         slug = self.kwargs.get("slug")
@@ -68,15 +65,16 @@ class PageListView(ListView):
 
 class PageCreateView(CreateView):
     form_class = PageCreateForm
-    template_name = 'pages/form.html'
     def get_success_url(self):
         return reverse('pages:detail',args=(self.object.id,))
 
 def PageInsightsListView(request, id):
-
+    template_name = 'pages/pageinsights_list.html'
     page_name = Page.objects.get(id__iexact = id).pretty_name
-    
+
     queryset = PageInsights.objects.filter(Q(page__id__iexact=id))
+    
+    
     table = PageInsightsTable(queryset)
 
     RequestConfig(request).configure(table)

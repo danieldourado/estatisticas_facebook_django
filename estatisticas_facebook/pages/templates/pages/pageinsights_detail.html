@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block head_title %} PageInsights | {{ block.super}}{% endblock head_title %} 
+
+{% block content %}
+<h1>PageInsights</h1>
+<ul>
+    {{object.name}}
+    {{object.page}}
+    {{object.value}}
+    {{object.end_time}}
+    {{object.period}}
+    {{object.title }}
+    {{object.description }}
+    {{object.name}}
+    {{object.slug}}
+
+</ul>
+
+    {{ block.super }}
+{% endblock content %}

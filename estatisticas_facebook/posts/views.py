@@ -28,3 +28,8 @@ class PostUpdate(UpdateView):
 class PostDelete(DeleteView):
     model = Post
     success_url = reverse_lazy('posts:list')
+
+
+class PostCreatet(CreateView):
+    model = Post
+    success_url = reverse_lazy('posts:list')

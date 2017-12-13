@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block head_title %} 
+    Pages | {{ block.super}}
+{% endblock head_title %} 
+
+{% block content %}
+
+<h1>{{ object.pretty_name }}</h1>
+
+<table class="table  table-sm table-striped">
+<tbody>
+  <tr>
+    <td><b>Criado:</b></td>
+    <td>{{ object.created }}</td>
+  </tr>
+  <tr>
+    <td><b>Short Name:</b></td>
+    <td>{{ object.name }}</td>
+  </tr>
+  <tr>
+    <td><b>Page Insights:</b></td>
+    <td><a href="{% url 'pages:insights-list' id=object.id %}">{{ page_insights }}</a></td>
+  </tr>
+
+</tbody>
+</table>
+    
+<a href="{% url 'pages:insights-create' id=object.id %}" class="btn btn-info" role="button">Extrair insights</a>
+<a href="{% url 'posts:create' pk=object.id %}" class="btn btn-info" role="button">Extrair Posts</a>
+
+<a href="{% url 'pages:erase-page'      id=object.id %}" class="btn btn-danger" role="button">Apagar</a>
+
+{% endblock content %}
