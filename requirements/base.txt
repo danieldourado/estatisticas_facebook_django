@@ -28,7 +28,7 @@ django-redis==4.8.0
 django-tables2==1.16.0
 django-vanilla-views==1.0.4
 django-webtest==1.9.2
-facebook-sdk==2.0.0
+-e git+https://github.com/mobolic/facebook-sdk.git@b953a62dba90dcce3dbea886fa90df93cf08cb70#egg=facebook_sdk-master
 future==0.16.0
 idna==2.6
 jinja2-time==0.2.0
