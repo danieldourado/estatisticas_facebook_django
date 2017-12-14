@@ -16,10 +16,8 @@ def getPageInsights(args):
     since = args['since']
     
     graph = facebook.GraphAPI(token)
-    
-    pagename = Page.objects.get(id=args['id'])
-    
-    raw_json = graph.get_object(pagename.name+'/insights?period=day&metric=page_fan_adds_unique,page_impressions_unique,page_engaged_users,page_stories,page_storytellers&since='+str(since))
+
+    raw_json = graph.get_object(args['id']+'/insights?period=day&metric=page_fan_adds_unique,page_impressions_unique,page_engaged_users,page_stories,page_storytellers&since='+str(since))
     
     pagedata = raw_json['data']
 
