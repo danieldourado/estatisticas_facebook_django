@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.views.generic import TemplateView, ListView, DetailView, CreateView
-from pages.models import Page, PageInsights
+from pages.models import *
+from estatisticas_facebook.posts.models import Post
 import facebook
 import json
 from django.http import HttpResponse, HttpResponseRedirect
@@ -39,6 +40,7 @@ class PageDetailView(DetailView):
         context = super(PageDetailView, self).get_context_data(**kwargs)
         print(self.kwargs.get("pk"))
         context['page_insights'] = PageInsights.objects.filter(page__id__iexact=self.kwargs.get("pk")).count()
+        context['posts'] = Post.objects.filter(page__id__iexact=self.kwargs.get("pk")).count()
         print(context)
         return context
         
