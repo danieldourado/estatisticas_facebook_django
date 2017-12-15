@@ -19,16 +19,15 @@ defusedxml==0.5.0
 django-allauth==0.34.0
 django-bootstrap3==9.1.0
 django-crispy-forms==1.7.0
-django-csv-exports==1.0.5
 django-debug-toolbar==1.9.1
 django-environ==0.4.4
-django-extensions==1.9.7
+django-extensions==1.9.8
 django-model-utils==3.0.0
 django-redis==4.8.0
 django-tables2==1.16.0
 django-vanilla-views==1.0.4
 django-webtest==1.9.2
--e git+https://github.com/mobolic/facebook-sdk.git@b953a62dba90dcce3dbea886fa90df93cf08cb70#egg=facebook_sdk-master
+-e git+https://github.com/mobolic/facebook-sdk.git@b953a62dba90dcce3dbea886fa90df93cf08cb70#egg=facebook_sdk-origin/master
 future==0.16.0
 idna==2.6
 jinja2-time==0.2.0
@@ -36,7 +35,6 @@ model-mommy==1.4.0
 numpy==1.13.3
 oauthlib==2.0.6
 olefile==0.44
-pandas==0.21.0
 poyo==0.4.1
 psycopg2==2.7.3.2
 pycparser==2.18

@@ -49,7 +49,7 @@ THIRD_PARTY_APPS = [
     'allauth',  # registration
     'allauth.account',  # registration
     'allauth.socialaccount',  # registration
-    'django_csv_exports',
+    #'django_csv_exports',
     'django_tables2',
     'bootstrap3',
 ]
@@ -67,7 +67,7 @@ LOCAL_APPS = [
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 
-ALLOWED_HOSTS = ['danieldourado-cookiecutter-django-danieldourado.c9users.io', '10.1.0.230']
+ALLOWED_HOSTS = ['danieldourado-cookiecutter-django-danieldourado.c9users.io', '10.1.0.230', 'estatisticas-facebook-django-danieldourado.c9users.io']
 
 
 # MIDDLEWARE CONFIGURATION
