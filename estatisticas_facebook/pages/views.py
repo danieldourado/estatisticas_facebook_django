@@ -67,6 +67,7 @@ class PageListView(ListView):
 
 class PageCreateView(CreateView):
     form_class = PageCreateForm
+    template_name = 'pages/form.html'
     def get_success_url(self):
         return reverse('pages:detail',args=(self.object.id,))
 
