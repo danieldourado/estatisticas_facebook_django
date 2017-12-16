@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Apagar</h1>
+    <p>Tem certeza que deseja apagar?</p>
+
+    <form id="reaction_form" method="post" action=".">
+    {% csrf_token %}
+    <input type="submit" value="Sim" class="btn btn-primary" /> <a href="{% url 'reactions:list' %}" class="btn btn-danger">Não</a>
+    </form>
+{% endblock %}
+
