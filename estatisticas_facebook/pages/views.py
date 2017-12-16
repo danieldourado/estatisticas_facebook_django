@@ -92,7 +92,6 @@ def PageInsightsCreateView(request, **kwargs):
     if form.is_valid():
         args = kwargs
         args['since'] = form.cleaned_data.get('since')
-        args['access_token'] = form.cleaned_data.get('access_token')
         getPageInsights(args)
         
         return HttpResponseRedirect(reverse('pages:detail',kwargs={'pk': kwargs['id']}));
