@@ -8,7 +8,6 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.db.models import Q
 from .forms import *
 from django.core.urlresolvers import reverse
-from pages.facebook_crawler import *
 from .tables import *
 from django_tables2 import RequestConfig
 

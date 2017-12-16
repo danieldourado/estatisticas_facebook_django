@@ -2,7 +2,33 @@ from django.db import models
 from django.db.models.signals import pre_save, post_save
 from .utils import unique_slug_generator
 from django.utils.dateformat import DateFormat, TimeFormat
+from util.graph import * 
 
+def getPageInfo(page):
+    raw_json = getNewGraphApi(page.name).get_object(page.name)
+    print (raw_json)
+    page.pretty_name = raw_json['name']
+    page.id = raw_json['id']
+
+def getPageInsights(args):
+
+    since = args['since']
+    raw_json = getNewGraphApi(args['id']).get_object(args['id']+'/insights?period=day&metric=page_fan_adds_unique,page_impressions_unique,page_engaged_users,page_stories,page_storytellers&since='+str(since))
+    
+    pagedata = raw_json['data']
+
+    for obj in pagedata:
+        print (obj['name'])
+        for value in obj['values']:
+            page_insights = PageInsights(
+                name=obj['name'], 
+                period=obj['period'], 
+                title=obj['title'], 
+                description=obj['description'], 
+                end_time=value['end_time'], 
+                value=value['value'], 
+                page_id=args['id'])
+            page_insights.save()
 
 
 # Create your models here.
@@ -34,9 +60,6 @@ class PageInsights(models.Model):
     
     def __str__(self):
         return str(DateFormat(self.end_time).format('Y-m-d'))    +': '+ self.title+' '+str(self.value)
-        
-        
-from pages.facebook_crawler import *
 
 def page_pre_save_reciever(sender, instance, *args, **kwargs):
     if not instance.pretty_name:
