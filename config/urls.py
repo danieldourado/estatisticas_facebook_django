@@ -22,6 +22,7 @@ urlpatterns = [
     url(r'^tokens/', include('estatisticas_facebook.tokens.urls', namespace='tokens')),
     url(r'^faceusers/', include('estatisticas_facebook.faceusers.urls', namespace='faceusers')),
     url(r'^reactions/', include('estatisticas_facebook.reactions.urls', namespace='reactions')),
+    url(r'^pagings/', include('estatisticas_facebook.pagings.urls', namespace='pagings')),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

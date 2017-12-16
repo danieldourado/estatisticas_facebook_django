@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% load bootstrap3 %}
+
+{% block content %}
+    <h1>Criar/Atualizar</h1>
+    <form id="paging_form" method="post" action="." class="form">
+      {% csrf_token %}
+      {% bootstrap_form form layout='horizontal' %}
+      {% buttons %}
+        <button type="submit" class="btn btn-primary">Confirmar</button>
+      {% endbuttons %}
+    </form>
+{% endblock %}
+
