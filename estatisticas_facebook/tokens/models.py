@@ -31,7 +31,6 @@ def getNewAccessToken(page_name):
     saveAccessToken(access_token)
     return access_token
     
-    
 class Token(models.Model):
     name = models.CharField(max_length=255)
     created = models.DateField(auto_now_add=True)

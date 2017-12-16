@@ -61,6 +61,7 @@ LOCAL_APPS = [
     'estatisticas_facebook.pages.apps.PagesConfig',
     'estatisticas_facebook.posts.apps.PostsConfig',
     'estatisticas_facebook.tokens.apps.TokensConfig',
+    'estatisticas_facebook.faceusers.apps.FaceUsersConfig',
     
     # Your stuff: custom apps go here
 ]

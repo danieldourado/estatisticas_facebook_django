@@ -20,6 +20,7 @@ urlpatterns = [
     url(r'^pages/', include('estatisticas_facebook.pages.urls', namespace='pages')),
     url(r'^posts/', include('estatisticas_facebook.posts.urls', namespace='posts')),
     url(r'^tokens/', include('estatisticas_facebook.tokens.urls', namespace='tokens')),
+    url(r'^faceusers/', include('estatisticas_facebook.faceusers.urls', namespace='faceusers')),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
