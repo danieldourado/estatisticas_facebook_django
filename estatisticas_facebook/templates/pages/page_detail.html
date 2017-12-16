@@ -22,11 +22,17 @@
     <td><b>Page Insights:</b></td>
     <td><a href="{% url 'pages:insights-list' id=object.id %}">{{ page_insights }}</a></td>
   </tr>
+  <tr>
+    <td><b>Posts:</b></td>
+    <td><a href="{% url 'posts:list' pk=object.id %}">{{ posts }}</a></td>
+  </tr>
 
 </tbody>
 </table>
     
 <a href="{% url 'pages:insights-create' id=object.id %}" class="btn btn-info" role="button">Extrair insights</a>
+<a href="{% url 'posts:create' pk=object.id %}" class="btn btn-info" role="button">Extrair Posts</a>
+
 <a href="{% url 'pages:erase-page'      id=object.id %}" class="btn btn-danger" role="button">Apagar</a>
 
 {% endblock content %}
