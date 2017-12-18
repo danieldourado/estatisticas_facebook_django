@@ -57,6 +57,7 @@ class PageInsights(models.Model):
     name            = models.CharField(max_length = 4500)
     created         = models.DateTimeField(auto_now_add=True)
     slug            = models.SlugField(null=True, blank=True)
+    post_paging     = models.CharField(max_length = 512, null=True)
     
     def __str__(self):
         return str(DateFormat(self.end_time).format('Y-m-d'))    +': '+ self.title+' '+str(self.value)
