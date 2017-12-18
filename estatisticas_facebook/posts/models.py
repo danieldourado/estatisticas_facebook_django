@@ -2,6 +2,7 @@ from django.db import models
 from pages.models import Page
 from django.utils.dateformat import DateFormat, TimeFormat
 from django.core.urlresolvers import reverse
+from util.graph import *
 
 
 class Post(models.Model):
@@ -25,7 +26,9 @@ class Post(models.Model):
     permalink_url                           = models.CharField(max_length = 450, default="")
     created                                 = models.DateTimeField(auto_now_add=True)
     name                                    = models.CharField(max_length = 450, default="")
-
+    reaction_paging                         = models.CharField(max_length = 512, null=True)
+    comment_paging                          = models.CharField(max_length = 512, null=True)
+    
     def __str__(self):
         return self.id
 
