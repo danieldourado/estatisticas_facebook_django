@@ -4,7 +4,11 @@ from django.utils.dateformat import DateFormat, TimeFormat
 from django.core.urlresolvers import reverse
 from util.graph import *
 
-
+def getPostInfo(page_id):
+    postsQuery = '/posts?fields=id,name,created_time,story,message,permalink_url,shares,comments.limit(1),reactions.limit(1),comments.limit(0).summary(total_count).as(total_comments),insights.metric(post_reactions_by_type_total)'
+    raw_json = getNewGraphApi(page_id).get_object(page_id+postsQuery)
+    print(raw_json)
+    
 class Post(models.Model):
     id                                      = models.CharField(primary_key = True, max_length = 45)
     page                                    = models.ForeignKey(Page)
