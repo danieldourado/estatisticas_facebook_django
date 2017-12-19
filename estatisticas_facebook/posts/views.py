@@ -1,7 +1,8 @@
 from django.core.urlresolvers import reverse_lazy, reverse
 from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView
 from .forms import PostForm, PostCreateForm
-from .models import Post
+from .models import *
+from pages.models import Page
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 
@@ -31,7 +32,6 @@ class PostDelete(DeleteView):
     model = Post
     success_url = reverse_lazy('posts:list')
 
-
 def PostCreateView(request, **kwargs):
     form = PostCreateForm(request.POST or None)
     template_name = 'posts/post_form.html'
@@ -39,9 +39,9 @@ def PostCreateView(request, **kwargs):
     if form.is_valid():
         args = kwargs
         args['since'] = form.cleaned_data.get('since')
-        args['access_token'] = form.cleaned_data.get('access_token')
-        #getPageInsights(args)
-        print(args)
+        pages = Page.objects.filter(id=kwargs['pk'])
+        getPost(pages[0])
+        
         return HttpResponseRedirect(reverse('pages:detail',kwargs={'pk': kwargs['pk']}));
     
     if form.errors:

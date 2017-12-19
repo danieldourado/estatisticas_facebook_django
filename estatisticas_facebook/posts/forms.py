@@ -8,4 +8,6 @@ class PostForm(forms.ModelForm):
         fields = ['name', ]
 
 class PostCreateForm(forms.Form):
-    access_token = forms.CharField()
+    since = forms.DateField()
+    
+    
