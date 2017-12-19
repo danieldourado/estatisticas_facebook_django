@@ -5,12 +5,8 @@ from django.core.urlresolvers import reverse
 from util.graph import *
 from pages.models import *
 
-def getPost(page_name):
-    pages = Page.objects.filter(name=page_name)
-    getPostInfo(pages[0])
-
-def getPostInfo(page_model):
-    postsQuery = '/posts?fields=id,name,created_time,story,message,permalink_url,shares.summary(count).as(shares),comments.limit(1),reactions.limit(1),comments.limit(0).summary(total_count).as(total_comments),insights.metric(post_reactions_by_type_total)&pretty=true'
+def getPostInfo(page_model, since):
+    postsQuery = '/posts?fields=id,name,created_time,story,message,permalink_url,shares.summary(count).as(shares),comments.limit(1),reactions.limit(1),comments.limit(0).summary(total_count).as(total_comments),insights.metric(post_reactions_by_type_total)&pretty=false&since='+str(since)
     raw_json = getNewGraphApi(page_model.id).get_object(page_model.id+postsQuery)
     
     data = raw_json['data']
