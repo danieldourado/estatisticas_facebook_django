@@ -11,6 +11,7 @@ Get App access token:
 https://graph.facebook.com/oauth/access_token?client_id=571058086572175&client_secret=c3cc91d289a9869e74f6907c9cc68909&grant_type=client_credentials
 
 
-
+python manage.py shell
 from estatisticas_facebook.posts.models import *
-getPostInfo('camaradeputados')
+getPost('camaradeputados')
+exit()
