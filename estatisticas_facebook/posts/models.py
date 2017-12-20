@@ -4,7 +4,7 @@ from django.utils.dateformat import DateFormat, TimeFormat
 from django.core.urlresolvers import reverse
 from util.graph import *
 from pages.models import *
-
+from estatisticas_facebook.comments.models import *
 
 def savePostData(page_model, data):
     for post in data:
@@ -22,12 +22,12 @@ def savePostData(page_model, data):
             permalink_url = post.get('permalink_url'),
             shares = shares,
             total_comments = post['total_comments']['summary']['total_count'],
-            post_reactions_like_total = insights_values.get('like'),
-            post_reactions_love_total = insights_values.get('love'),
-            post_reactions_wow_total = insights_values.get('wow'),
-            post_reactions_haha_total = insights_values.get('haha'),
-            post_reactions_sorry_total = insights_values.get('sorry'),
-            post_reactions_anger_total = insights_values.get('anger'),
+            like  = insights_values.get('like'),
+            love  = insights_values.get('love'),
+            wow  = insights_values.get('wow'),
+            haha  = insights_values.get('haha'),
+            sorry  = insights_values.get('sorry'),
+            anger = insights_values.get('anger'),
             reactions   =insights_values['like']
                         +insights_values['love']
                         +insights_values['wow']
@@ -36,6 +36,9 @@ def savePostData(page_model, data):
                         +insights_values['anger'],
             )
         temp_post.save()
+        
+        getComments(temp_post, post.get('comments'))
+        
         print('new post saved: '+temp_post.id)
         
 def getPostInfo(page_model, since):

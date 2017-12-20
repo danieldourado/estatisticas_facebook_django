@@ -39,8 +39,7 @@ def PostCreateView(request, **kwargs):
     if form.is_valid():
         args = kwargs
         args['since'] = form.cleaned_data.get('since')
-        pages = Page.objects.filter(id=kwargs['pk'])
-        getPostInfo(pages[0],args['since'])
+        getPostInfo(Page.objects.get(id__iexact=kwargs['pk']),args['since'])
         
         return HttpResponseRedirect(reverse('pages:detail',kwargs={'pk': kwargs['pk']}));
     
