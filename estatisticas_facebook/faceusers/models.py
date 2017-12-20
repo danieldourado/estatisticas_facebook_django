@@ -9,16 +9,18 @@ def getFaceUser(user_json):
     return temp_user
 
 def setInteraction(model, interaction):
-    setattr(model, 'bar', 'BAR')
+    value = getattr(model, interaction) + 1
+    setattr(model, interaction, value)
+    
+    if interaction is 'like' or 'love' or 'wow' or 'haha' or 'sorry' or 'anger':
+        model.reactions += 1
+    
+    print('new user interaction saved: '+interaction)
 
 def addInteraction(user_json, interaction):
     face_user = getFaceUser(user_json)
-    
-    if interaction is 'like':
-        face_user.reactions+=1
-        face_user.post_reactions_like_total+=1
-        print('new user interaction saved: '+interaction)
-    
+    setInteraction(face_user, interaction)
+
     face_user.save()
     return face_user
     
@@ -29,12 +31,12 @@ class FaceUsers(models.Model):
     comments                                = models.IntegerField(default=0)
     shares                                  = models.IntegerField(default=0)
     reactions                               = models.IntegerField(default=0)
-    like                                    = models.IntegerField(default=0)
-    love                                    = models.IntegerField(default=0)
-    wow                                     = models.IntegerField(default=0)
-    haha                                    = models.IntegerField(default=0)
-    sorry                                   = models.IntegerField(default=0)
-    anger                                   = models.IntegerField(default=0)
+    post_reactions_like_total               = models.IntegerField(default=0)
+    post_reactions_love_total               = models.IntegerField(default=0)
+    post_reactions_wow_total                = models.IntegerField(default=0)
+    post_reactions_haha_total               = models.IntegerField(default=0)
+    post_reactions_sorry_total              = models.IntegerField(default=0)
+    post_reactions_anger_total              = models.IntegerField(default=0)
     post_reactions_positivo_total           = models.IntegerField(default=0)
     post_reactions_negativo_total           = models.IntegerField(default=0)
     post_reactions_positivo_porcentagem     = models.IntegerField(default=0)

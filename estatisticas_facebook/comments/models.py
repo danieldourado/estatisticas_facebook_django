@@ -9,7 +9,7 @@ def getComments(post_model, comment):
     
     for comment in data:
         
-        user = addInteraction(comment.get('from'), 'comment')
+        user = addInteraction(comment.get('from'), 'comments')
         
         Comment(
             post = post_model,

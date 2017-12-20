@@ -22,12 +22,12 @@ def savePostData(page_model, data):
             permalink_url = post.get('permalink_url'),
             shares = shares,
             total_comments = post['total_comments']['summary']['total_count'],
-            like  = insights_values.get('like'),
-            love  = insights_values.get('love'),
-            wow  = insights_values.get('wow'),
-            haha  = insights_values.get('haha'),
-            sorry  = insights_values.get('sorry'),
-            anger = insights_values.get('anger'),
+            post_reactions_like_total = insights_values.get('like'),
+            post_reactions_love_total = insights_values.get('love'),
+            post_reactions_wow_total = insights_values.get('wow'),
+            post_reactions_haha_total = insights_values.get('haha'),
+            post_reactions_sorry_total = insights_values.get('sorry'),
+            post_reactions_anger_total = insights_values.get('anger'),
             reactions   =insights_values['like']
                         +insights_values['love']
                         +insights_values['wow']
