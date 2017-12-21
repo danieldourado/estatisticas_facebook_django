@@ -5,6 +5,7 @@ from django.core.urlresolvers import reverse
 from util.graph import *
 from pages.models import *
 from estatisticas_facebook.comments.models import *
+from estatisticas_facebook.reactions.models import *
 
 def savePostData(page_model, data):
     for post in data:
@@ -38,6 +39,7 @@ def savePostData(page_model, data):
         temp_post.save()
         
         getComments(temp_post, post.get('comments'))
+        getReactions(temp_post, post.get('reactions'))
         
         print('new post saved: '+temp_post.id)
         

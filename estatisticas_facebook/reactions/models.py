@@ -4,7 +4,10 @@ from estatisticas_facebook.posts.models import *
 from estatisticas_facebook.faceusers.models import *
 
 def get_user_object_from_reaction_json(reaction):
-    return {name:reaction.get('name'), id:reaction.get('id')}
+    user = {}
+    user['name'] = reaction.get('name')
+    user['id'] = reaction.get('id')
+    return user
 
 def getReactions(post_model, reaction):
     
@@ -29,7 +32,7 @@ class Reaction(models.Model):
     name                                    = models.CharField(max_length = 512, default="")
 
     def __str__(self):
-        return self.id
+        return self.type
 
     def get_absolute_url(self):
         return reverse('reactions:detail', args=[str(self.id)])
