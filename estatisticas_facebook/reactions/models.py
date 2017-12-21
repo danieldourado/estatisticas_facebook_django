@@ -1,14 +1,31 @@
 from django.core.urlresolvers import reverse
 from django.db import models
-from estatisticas_facebook.posts.models import Post
-from estatisticas_facebook.faceusers.models import FaceUsers
+from estatisticas_facebook.posts.models import *
+from estatisticas_facebook.faceusers.models import *
 
+def get_user_object_from_reaction_json(reaction):
+    return {name:reaction.get('name'), id:reaction.get('id')}
+
+def getReactions(post_model, reaction):
+    
+    paging = reaction['paging']
+    data    = reaction['data']
+    
+    for reaction in data:
+        
+        user = addInteraction(get_user_object_from_reaction_json(reaction), 'reactions')
+        
+        Reaction(
+            type = reaction.get('type'),
+            user = user,
+            post = post_model,
+            ).save()
+        print('new reaction saved: '+reaction.get('type'))
 
 class Reaction(models.Model):
-    id                                      = models.CharField(primary_key = True, max_length = 45)
     type                                    = models.CharField(default="", max_length=64)
     user                                    = models.ForeignKey(FaceUsers, null=True)
-    post                                    = models.ForeignKey(Post, null=True)
+    post                                    = models.ForeignKey('posts.Post', null=True)
     name                                    = models.CharField(max_length = 512, default="")
 
     def __str__(self):
