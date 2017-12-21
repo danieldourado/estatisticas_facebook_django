@@ -26,6 +26,18 @@
     <td><b>Posts:</b></td>
     <td><a href="{% url 'posts:list' pk=object.id %}">{{ posts }}</a></td>
   </tr>
+  <tr>
+    <td><b>Comentários:</b></td>
+    <td><a href="">{{ comments }}</a></td>
+  </tr>
+  <tr>
+    <td><b>Reações:</b></td>
+    <td><a href="">{{ reactions }}</a></td>
+  </tr>
+  <tr>
+    <td><b>Usuários:</b></td>
+    <td><a href="">{{ faceusers }}</a></td>
+  </tr>
 
 </tbody>
 </table>

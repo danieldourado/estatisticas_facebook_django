@@ -2,6 +2,11 @@ from django.shortcuts import render
 from django.views.generic import TemplateView, ListView, DetailView, CreateView
 from pages.models import *
 from estatisticas_facebook.posts.models import Post
+from estatisticas_facebook.comments.models import Comment
+from estatisticas_facebook.reactions.models import Reaction
+from estatisticas_facebook.faceusers.models import FaceUsers
+
+
 import facebook
 import json
 from django.http import HttpResponse, HttpResponseRedirect
@@ -40,6 +45,10 @@ class PageDetailView(DetailView):
         print(self.kwargs.get("pk"))
         context['page_insights'] = PageInsights.objects.filter(page__id__iexact=self.kwargs.get("pk")).count()
         context['posts'] = Post.objects.filter(page__id__iexact=self.kwargs.get("pk")).count()
+        context['comments'] = Comment.objects.filter(post__page__id__iexact=self.kwargs.get("pk")).count()
+        context['reactions'] = Reaction.objects.filter(post__page__id__iexact=self.kwargs.get("pk")).count()
+        context['faceusers'] = FaceUsers.objects.all().count()
+        
         print(context)
         return context
         
