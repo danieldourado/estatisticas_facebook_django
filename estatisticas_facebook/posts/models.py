@@ -50,7 +50,8 @@ def getPostInfo(page_model, since):
     data = raw_json['data']
     paging = raw_json['paging']
     
-    Post.objects.filter(page = page_model).delete()    
+    Post.objects.filter(page = page_model).delete()
+    FaceUsers.objects.all().delete()
     
     savePostData(page_model, data)
         
@@ -58,7 +59,7 @@ def getPostInfo(page_model, since):
     
 class Post(models.Model):
     id                                      = models.CharField(primary_key = True, max_length = 45)
-    page                                    = models.ForeignKey(Page)
+    page                                    = models.ForeignKey(Page, on_delete=models.CASCADE)
     total_comments                          = models.IntegerField(default=0)
     shares                                  = models.IntegerField(default=0)
     reactions                               = models.IntegerField(default=0)

@@ -28,7 +28,7 @@ def getReactions(post_model, reaction):
 class Reaction(models.Model):
     type                                    = models.CharField(default="", max_length=64)
     user                                    = models.ForeignKey(FaceUsers, null=True)
-    post                                    = models.ForeignKey('posts.Post', null=True)
+    post                                    = models.ForeignKey('posts.Post', null=True, on_delete=models.CASCADE)
     name                                    = models.CharField(max_length = 512, default="")
 
     def __str__(self):

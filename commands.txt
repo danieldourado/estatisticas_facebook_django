@@ -15,3 +15,11 @@ python manage.py shell
 from estatisticas_facebook.posts.models import *
 getPost('camaradeputados')
 exit()
+
+python manage.py shell
+from estatisticas_facebook.faceusers.models import *
+from django.db.models import Max
+value = FaceUsers.objects.all().aggregate(Max('reactions'))
+FaceUsers.objects.get(reactions__iexact=value)
+
+exit()
