@@ -16,7 +16,7 @@ def getReactions(post_model, reaction):
     
     for reaction in data:
         
-        user = addInteraction(get_user_object_from_reaction_json(reaction), 'reactions')
+        user = addInteraction(get_user_object_from_reaction_json(reaction), reaction.get('type'))
         
         Reaction(
             type = reaction.get('type'),
