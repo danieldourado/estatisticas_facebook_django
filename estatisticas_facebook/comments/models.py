@@ -1,6 +1,7 @@
 from django.core.urlresolvers import reverse
 from django.db import models
 from estatisticas_facebook.faceusers.models import *
+from estatisticas_facebook.pagings.models import *
 
 def getComments(post_model, comment):
     
@@ -20,6 +21,8 @@ def getComments(post_model, comment):
             user = user,
             ).save()
         print('new comment saved: '+comment.get('id'))
+        
+    save_paging(post_model,'comments', paging)
             
 
 class Comment(models.Model):

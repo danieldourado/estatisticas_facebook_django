@@ -2,6 +2,7 @@ from django.core.urlresolvers import reverse
 from django.db import models
 from estatisticas_facebook.posts.models import *
 from estatisticas_facebook.faceusers.models import *
+from estatisticas_facebook.pagings.models import *
 
 def get_user_object_from_reaction_json(reaction):
     user = {}
@@ -24,6 +25,9 @@ def getReactions(post_model, reaction):
             post = post_model,
             ).save()
         print('new reaction saved: '+reaction.get('type'))
+    
+    save_paging(post_model,'reactions', paging)
+    
 
 class Reaction(models.Model):
     type                                    = models.CharField(default="", max_length=64)
