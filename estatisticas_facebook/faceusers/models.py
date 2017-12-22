@@ -2,7 +2,6 @@ from django.core.urlresolvers import reverse
 from django.db import models
 
 def getFaceUser(user_json):
-    print(user_json)
     temp_user, created = FaceUsers.objects.get_or_create(id=user_json.get('id'))    
     temp_user.name = user_json.get('name')
     
