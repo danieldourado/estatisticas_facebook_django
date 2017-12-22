@@ -1,12 +1,34 @@
 from django.db import models
-from pages.models import Page
 from django.utils.dateformat import DateFormat, TimeFormat
 from django.core.urlresolvers import reverse
-from util.graph import *
-from pages.models import *
+from estatisticas_facebook.util.graph import getNewGraphApi
+from estatisticas_facebook.pages.models import *
 from estatisticas_facebook.comments.models import *
 from estatisticas_facebook.reactions.models import *
+from estatisticas_facebook.faceusers.models import *
 
+COMMENTS = 'comments'
+REACTIONS = 'reactions'
+POSTS = 'posts'
+
+
+
+def save_paging(model, model_name, paging_json):
+    
+    if model_name == COMMENTS:
+        model.comment_paging = paging_json.get('cursors').get('after')
+    if model_name == REACTIONS:
+        model.reaction_paging = paging_json.get('cursors').get('after')
+    
+    model.save()
+
+
+def get_item_and_paging(extracting_function, model, model_name, data):
+
+    extracting_function(model, data['data'])
+    save_paging(model,model_name, data['paging'])
+    
+    
 def savePostData(page_model, data):
     for post in data:
         insights_values = post['insights']['data'][0]['values'][0]['value']
@@ -38,28 +60,26 @@ def savePostData(page_model, data):
             )
         temp_post.save()
         
-        getComments(temp_post, post.get('comments'))
-        getReactions(temp_post, post.get('reactions'))
+        get_item_and_paging(getComments, temp_post, 'comments', post.get('comments'))
+        get_item_and_paging(getReactions, temp_post, 'reactions', post.get('reactions'))
         
         print('new post saved: '+temp_post.id)
         
 def getPostInfo(page_model, since):
-    postsQuery = '/posts?fields=id,name,created_time,story,message,permalink_url,shares.summary(count).as(shares),comments.limit(1),reactions.limit(1),comments.limit(0).summary(total_count).as(total_comments),insights.metric(post_reactions_by_type_total)&pretty=false&limit=50&since='+str(since)
-    raw_json = getNewGraphApi(page_model.id).get_object(page_model.id+postsQuery)
-    
-    data = raw_json['data']
-    paging = raw_json['paging']
+    postsQuery = '/posts?fields=id,name,created_time,story,message,permalink_url,shares.summary(count).as(shares),comments,reactions,comments.limit(0).summary(total_count).as(total_comments),insights.metric(post_reactions_by_type_total)&pretty=false&limit=50&since='+str(since)
+    data = getNewGraphApi(page_model.id).get_object(page_model.id+postsQuery)
     
     Post.objects.filter(page = page_model).delete()
     FaceUsers.objects.all().delete()
     
-    savePostData(page_model, data)
-        
+    get_item_and_paging(savePostData, page_model, 'posts', data)
+
+    #savePostData(page_model, data)
     
     
 class Post(models.Model):
     id                                      = models.CharField(primary_key = True, max_length = 45)
-    page                                    = models.ForeignKey(Page, on_delete=models.CASCADE)
+    page                                    = models.ForeignKey('pages.Page', on_delete=models.CASCADE)
     total_comments                          = models.IntegerField(default=0)
     shares                                  = models.IntegerField(default=0)
     reactions                               = models.IntegerField(default=0)

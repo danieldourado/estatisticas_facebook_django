@@ -2,6 +2,6 @@ from django.apps import AppConfig
 
 
 class PagesConfig(AppConfig):
-    name = 'pages'
+    name = 'estatisticas_facebook.pages'
     verbose_name = "Pages"
 

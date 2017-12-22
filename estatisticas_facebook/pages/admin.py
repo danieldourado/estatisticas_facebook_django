@@ -1,5 +1,5 @@
 from django.contrib import admin
-from pages.models import Page, PageInsights
+from estatisticas_facebook.pages.models import Page, PageInsights
 
 class PageAdmin(admin.ModelAdmin):
     readonly_fields = ('created',)

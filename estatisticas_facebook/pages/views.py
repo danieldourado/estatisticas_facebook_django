@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.views.generic import TemplateView, ListView, DetailView, CreateView
-from pages.models import *
+from estatisticas_facebook.pages.models import *
 from estatisticas_facebook.posts.models import Post
 from estatisticas_facebook.comments.models import Comment
 from estatisticas_facebook.reactions.models import Reaction

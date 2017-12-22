@@ -1,6 +1,6 @@
 from django.conf.urls import url
 
-from pages.views import *
+from estatisticas_facebook.pages.views import *
 
 urlpatterns = [
 

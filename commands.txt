@@ -18,8 +18,9 @@ exit()
 
 python manage.py shell
 from estatisticas_facebook.faceusers.models import *
+from django.db.models.functions import Coalesce
 from django.db.models import Max
-value = FaceUsers.objects.all().aggregate(Max('reactions'))
-FaceUsers.objects.get(reactions__iexact=value)
+value = FaceUsers.objects.all().order_by(Coalesce('post_reactions_angry_total','comments').desc())
+print(value)
 
 exit()
