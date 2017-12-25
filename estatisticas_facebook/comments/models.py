@@ -1,6 +1,7 @@
 from django.core.urlresolvers import reverse
 from django.db import models
 from estatisticas_facebook.faceusers.models import *
+from util.graph import debug
 
 def getComments(post_model, data):
 
@@ -16,7 +17,7 @@ def getComments(post_model, data):
             permalink_url = 'https://facebook.com/'+comment.get('id'),
             user = user,
             ).save()
-        print('new comment saved: '+comment.get('id'))
+        debug('new comment saved: '+comment.get('id'))
 
 class Comment(models.Model):
     id              = models.CharField      (primary_key = True, max_length = 45)

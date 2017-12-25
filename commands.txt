@@ -24,3 +24,9 @@ value = FaceUsers.objects.all().order_by(Coalesce('post_reactions_angry_total','
 print(value)
 
 exit()
+
+python manage.py shell
+from estatisticas_facebook.posts.models import *
+
+
+exit()

@@ -1,5 +1,6 @@
 from django.core.urlresolvers import reverse
 from django.db import models
+from util.graph import debug
 
 def getFaceUser(user_json):
     temp_user, created = FaceUsers.objects.get_or_create(id=user_json.get('id'))    
@@ -17,7 +18,7 @@ def setInteraction(model, interaction):
     else:
         value = getattr(model, interaction) + 1
         setattr(model, interaction, value)
-    print('new user interaction saved: '+interaction)
+    debug('new user interaction saved: '+interaction)
 
 def addInteraction(user_json, interaction):
     face_user = getFaceUser(user_json)

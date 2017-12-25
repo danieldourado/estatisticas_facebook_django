@@ -2,6 +2,7 @@ from django.core.urlresolvers import reverse_lazy, reverse
 from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView
 from .forms import PostForm, PostCreateForm
 from .models import *
+from util.graph import *
 from estatisticas_facebook.pages.models import Page
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
