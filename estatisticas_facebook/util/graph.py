@@ -2,7 +2,7 @@ import facebook
 from estatisticas_facebook.pages.models import *
 from estatisticas_facebook.tokens.models import *
 
-debug_posts = True
+debug_posts = False
 debug_reactions = False
 debug_comments = False
 

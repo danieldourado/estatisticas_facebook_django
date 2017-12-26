@@ -10,7 +10,7 @@ def getFaceUser(user_json):
 
 def setInteraction(model, interaction):
     interaction = interaction.lower()
-    if interaction.lower() in ('like','love','wow','haha','sad','angry'):
+    if interaction.lower() in ('like','love','wow','haha','sad','angry', 'pride','thankful'):
         model.reactions += 1
         attribute = 'post_reactions_'+interaction+'_total'
         value = getattr(model, attribute) + 1
@@ -40,6 +40,8 @@ class FaceUsers(models.Model):
     post_reactions_haha_total               = models.IntegerField(default=0)
     post_reactions_sad_total                = models.IntegerField(default=0)
     post_reactions_angry_total              = models.IntegerField(default=0)
+    post_reactions_pride_total              = models.IntegerField(default=0)
+    post_reactions_thankful_total           = models.IntegerField(default=0)
     post_reactions_positivo_total           = models.IntegerField(default=0)
     post_reactions_negativo_total           = models.IntegerField(default=0)
     post_reactions_positivo_porcentagem     = models.IntegerField(default=0)
