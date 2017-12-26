@@ -14,7 +14,7 @@ FINISHED = 'finished'
 
 def get_post_query(model, since):
     
-    default_query = '/posts?fields=id,name,created_time,story,message,permalink_url,shares.summary(count).as(shares),comments,reactions,comments.limit(0).summary(total_count).as(total_comments),insights.metric(post_reactions_by_type_total)&pretty=false&limit=50&since='+str(since)
+    default_query = '/posts?fields=id,name,created_time,story,message,permalink_url,shares.summary(count).as(shares),comments.limit(1),reactions.limit(1),comments.limit(0).summary(total_count).as(total_comments),insights.metric(post_reactions_by_type_total)&pretty=false&limit=100&since='+str(since)
     
     if model.post_paging is None:
         return default_query
