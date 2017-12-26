@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.db.models.functions import Coalesce
 from django.views.generic import TemplateView, ListView, DetailView, CreateView
 from estatisticas_facebook.pages.models import *
 from estatisticas_facebook.posts.models import Post
@@ -48,6 +49,7 @@ class PageDetailView(DetailView):
         context['comments'] = Comment.objects.filter(post__page__id__iexact=self.kwargs.get("pk")).count()
         context['reactions'] = Reaction.objects.filter(post__page__id__iexact=self.kwargs.get("pk")).count()
         context['faceusers'] = FaceUsers.objects.all().count()
+        context['hater'] = FaceUsers.objects.all().order_by(Coalesce('post_reactions_angry_total','comments').desc())[0]
         
         print(context)
         return context
