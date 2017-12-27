@@ -13,10 +13,6 @@
     <table class="table  table-sm table-striped">
     <tbody>
       <tr>
-        <td><b>Posts desde:</b></td>
-        <td>{{ object.post_since }}</td>
-      </tr>
-      <tr>
         <td><b>Short Name:</b></td>
         <td>{{ object.name }}</td>
       </tr>
@@ -26,7 +22,7 @@
       </tr>
       <tr>
         <td><b>Posts:</b></td>
-        <td>{{ posts }}</td>
+        <td>{{ posts }}(desde {{object.post_since.date}})</td>
       </tr>
       <tr>
         <td><b>Comentários:</b></td>
