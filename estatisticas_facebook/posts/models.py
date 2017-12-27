@@ -44,7 +44,7 @@ def save_post_data(page_model, data):
         get_item_and_paging(save_comment_data, temp_post, COMMENTS, post.get('comments'))
         get_item_and_paging(save_reaction_data, temp_post, REACTIONS, post.get('reactions'))
         
-        debug('new post saved: '+temp_post.id)
+
 
 def get_posts(page_model, since):
     

@@ -1,15 +1,15 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1>Posts</h1>
-    <a href="{% url 'posts:create' %}">Criar</a>
+    <h1>Lista</h1>
+    <a href="{% url 'comments:create' %}">Criar</a>
     <ul>
         {% for object in object_list %}
             <li>
                 {{ object }}
                 <a href="{{ object.get_absolute_url }}">Detalhes</a>
-                <a href="{% url 'posts:update' object.pk %}">Atualizar</a>
-                <a href="{% url 'posts:delete' object.pk %}">Apagar</a>
+                <a href="{% url 'comments:update' object.pk %}">Atualizar</a>
+                <a href="{% url 'comments:delete' object.pk %}">Apagar</a>
             </li>
         {% empty %}
                 <p>Sem items.</p>
@@ -20,13 +20,13 @@
         <div class="pagination">
             <span class="page-links">
                 {% if page_obj.has_previous %}
-                    <a href="{% url 'posts:list' %}?page={{ page_obj.previous_page_number }}">anterior</a>
+                    <a href="{% url 'comments:list' %}?page={{ page_obj.previous_page_number }}">anterior</a>
                 {% endif %}
                 <span class="page-current">
                     Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
                 </span>
                 {% if page_obj.has_next %}
-                    <a href="{% url 'posts:list' %}?page={{ page_obj.next_page_number }}">próximo</a>
+                    <a href="{% url 'comments:list' %}?page={{ page_obj.next_page_number }}">próximo</a>
                 {% endif %}
             </span>
         </div>

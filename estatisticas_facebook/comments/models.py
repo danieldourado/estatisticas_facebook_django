@@ -44,7 +44,8 @@ def save_comment_data(post_model, data):
             permalink_url = 'https://facebook.com/'+comment.get('id'),
             user = user,
             ).save()
-        debug('new comment saved: '+comment.get('id'))
+        
+        #debug('new comment saved: '+comment.get('id'))
 
 class Comment(models.Model):
     id              = models.CharField      (primary_key = True, max_length = 45)

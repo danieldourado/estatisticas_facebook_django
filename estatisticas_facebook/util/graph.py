@@ -2,7 +2,7 @@ import facebook
 from estatisticas_facebook.pages.models import *
 from estatisticas_facebook.tokens.models import *
 
-debug_posts = False
+debug_posts = True
 debug_reactions = False
 debug_comments = False
 
@@ -11,6 +11,11 @@ REACTIONS = 'reactions'
 POSTS = 'posts'
 FINISHED = 'finished'
 
+def debug(message):
+    if debug_posts:
+        print(message)
+        
+        
 def getNewGraphApi(page_name):
     return facebook.GraphAPI(getNewAccessToken(page_name))
 
@@ -22,7 +27,6 @@ def get_paged_query(paging, query):
         return False
 
     return query+'&after='+paging
-    
     
 def save_paging(model, model_name, paging_json):
 
@@ -49,7 +53,4 @@ def get_item_and_paging(extracting_function, model, model_name, data):
     extracting_function(model, data.get('data'))
     save_paging(model,model_name, data.get('paging'))
 
-
-def debug(message):
-    if debug_posts:
-        print(message)
+    debug(str(len(data.get('data')))+' '+model_name+' saved for '+model.name)

@@ -55,7 +55,6 @@ class PageDetailView(DetailView):
         context['sad'] = FaceUsers.objects.all().order_by(Coalesce('post_reactions_sad_total','comments').desc())[0]
         context['commenter'] = FaceUsers.objects.all().order_by(Coalesce('comments','post_reactions_sad_total').desc())[0]
 
-        print(context)
         return context
         
     def get_queryset(self):

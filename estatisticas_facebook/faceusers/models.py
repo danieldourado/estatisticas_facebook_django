@@ -18,7 +18,8 @@ def setInteraction(model, interaction):
     else:
         value = getattr(model, interaction) + 1
         setattr(model, interaction, value)
-    debug('new user interaction saved: '+interaction)
+    
+    #debug('new user interaction saved: '+interaction)
 
 def addInteraction(user_json, interaction):
     face_user = getFaceUser(user_json)

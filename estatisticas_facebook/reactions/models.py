@@ -47,7 +47,7 @@ def save_reaction_data(post_model, data):
             user = user,
             post = post_model,
             ).save()
-        debug('new reaction saved: '+reaction.get('type'))
+        #debug('new reaction saved: '+reaction.get('type'))
 
 
 class Reaction(models.Model):
