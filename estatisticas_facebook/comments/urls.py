@@ -8,4 +8,5 @@ urlpatterns = [
     url(r'^(?P<pk>\d+)/$', views.CommentDetail.as_view(), name='detail'),
     url(r'^(?P<pk>\d+)/update/$', views.CommentUpdate.as_view(), name='update'),
     url(r'^(?P<pk>\d+)/delete/$', views.CommentDelete.as_view(), name='delete'),
+    url(r'^(?P<pk>\d+)/create/$', views.CommentCreateView, name='create'),
 ]

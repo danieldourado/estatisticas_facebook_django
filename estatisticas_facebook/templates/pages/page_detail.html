@@ -48,7 +48,8 @@
     
 <a href="{% url 'pages:insights-create' id=object.id %}" class="btn btn-info" role="button">Extrair insights</a>
 <a href="{% url 'posts:create' pk=object.id %}" class="btn btn-info" role="button">Extrair Posts</a>
-<a href="{% url 'reactions:create' pk=object.id %}" class="btn btn-info" role="button">Extrair Reactions</a>
+<a href="{% url 'reactions:create' pk=object.id %}" class="btn btn-info" role="button">Extrair Reações</a>
+<a href="{% url 'comments:create' pk=object.id %}" class="btn btn-info" role="button">Extrair Comentários</a>
 
 <a href="{% url 'pages:erase-page'      id=object.id %}" class="btn btn-danger" role="button">Apagar</a>
 

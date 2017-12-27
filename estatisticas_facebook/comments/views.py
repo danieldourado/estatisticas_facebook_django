@@ -1,7 +1,9 @@
 from django.core.urlresolvers import reverse_lazy
 from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView
 from .forms import CommentForm
-from .models import Comment
+from .models import *
+from django.http import HttpResponse, HttpResponseRedirect
+from estatisticas_facebook.pages.models import Page
 
 
 class CommentList(ListView):
@@ -28,3 +30,10 @@ class CommentUpdate(UpdateView):
 class CommentDelete(DeleteView):
     model = Comment
     success_url = reverse_lazy('comments:list')
+
+
+def CommentCreateView(request, **kwargs):
+
+    getCommentInfo(Page.objects.get(id__iexact=kwargs['pk']))
+    return HttpResponseRedirect(reverse('pages:detail',kwargs={'pk': kwargs['pk']}));
+    
