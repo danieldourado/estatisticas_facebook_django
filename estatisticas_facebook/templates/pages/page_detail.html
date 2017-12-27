@@ -8,60 +8,67 @@
 
 <h1>{{ object.pretty_name }}</h1>
 
-<table class="table  table-sm table-striped">
-<tbody>
-  <tr>
-    <td><b>Criado:</b></td>
-    <td>{{ object.created }}</td>
-  </tr>
-  <tr>
-    <td><b>Short Name:</b></td>
-    <td>{{ object.name }}</td>
-  </tr>
-  <tr>
-    <td><b>Page Insights:</b></td>
-    <td>{{ page_insights }}</a></td>
-  </tr>
-  <tr>
-    <td><b>Posts:</b></td>
-    <td>{{ posts }}</td>
-  </tr>
-  <tr>
-    <td><b>Comentários:</b></td>
-    <td>{{ comments }}</td>
-  </tr>
-  <tr>
-    <td><b>Reações:</b></td>
-    <td>{{ reactions }}</td>
-  </tr>
-  <tr>
-    <td><b>Usuários:</b></td>
-    <td>{{ faceusers }}</td>
-  </tr>
-  <tr>
-    <td><b>Maior hater:</b></td>
-    <td><a href="https://www.facebook.com/{{ hater.id}}">{{ hater.name}} ({{ hater.post_reactions_angry_total}})</a></td>
-  </tr>
-  <tr>
-    <td><b>Maior liker:</b></td>
-    <td><a href="https://www.facebook.com/{{ liker.id}}">{{ liker.name}} ({{ liker.post_reactions_like_total}})</a></td>
-  </tr>
-  <tr>
-    <td><b>Maior lover:</b></td>
-    <td><a href="https://www.facebook.com/{{ lover.id}}">{{ lover.name}} ({{ lover.post_reactions_love_total}})</a></td>
-  </tr>
-  <tr>
-    <td><b>Maior sad:</b></td>
-    <td><a href="https://www.facebook.com/{{ sad.id}}">{{ sad.name}} ({{ sad.post_reactions_sad_total}})</a></td>
-  </tr>
-  <tr>
-    <td><b>Maior commenter:</b></td>
-    <td><a href="https://www.facebook.com/{{ commenter.id}}">{{ commenter.name}} ({{ commenter.comments}})</a></td>
-  </tr>
-
-</tbody>
-</table>
+<div class="row">
+  <div class="col">
+    <table class="table  table-sm table-striped">
+    <tbody>
+      <tr>
+        <td><b>Criado:</b></td>
+        <td>{{ object.created }}</td>
+      </tr>
+      <tr>
+        <td><b>Short Name:</b></td>
+        <td>{{ object.name }}</td>
+      </tr>
+      <tr>
+        <td><b>Page Insights:</b></td>
+        <td>{{ page_insights }}</a></td>
+      </tr>
+      <tr>
+        <td><b>Posts:</b></td>
+        <td>{{ posts }}</td>
+      </tr>
+      <tr>
+        <td><b>Comentários:</b></td>
+        <td>{{ comments }}</td>
+      </tr>
+      <tr>
+        <td><b>Reações:</b></td>
+        <td>{{ reactions }}</td>
+      </tr>
+      <tr>
+        <td><b>Usuários:</b></td>
+        <td>{{ faceusers }}</td>
+      </tr>
+      <tr>
+        <td><b>Maior hater:</b></td>
+        <td><a href="https://www.facebook.com/{{ hater.id}}">{{ hater.name}} ({{ hater.post_reactions_angry_total}})</a></td>
+      </tr>
+      <tr>
+        <td><b>Maior liker:</b></td>
+        <td><a href="https://www.facebook.com/{{ liker.id}}">{{ liker.name}} ({{ liker.post_reactions_like_total}})</a></td>
+      </tr>
+      <tr>
+        <td><b>Maior lover:</b></td>
+        <td><a href="https://www.facebook.com/{{ lover.id}}">{{ lover.name}} ({{ lover.post_reactions_love_total}})</a></td>
+      </tr>
+      <tr>
+        <td><b>Maior sad:</b></td>
+        <td><a href="https://www.facebook.com/{{ sad.id}}">{{ sad.name}} ({{ sad.post_reactions_sad_total}})</a></td>
+      </tr>
+      <tr>
+        <td><b>Maior commenter:</b></td>
+        <td><a href="https://www.facebook.com/{{ commenter.id}}">{{ commenter.name}} ({{ commenter.comments}})</a></td>
+      </tr>
     
+    </tbody>
+    </table>
+  </div>
+  <div class="col">  
+
+  </div>
+</div>
+
 <a href="{% url 'pages:insights-create' id=object.id %}" class="btn btn-info" role="button">Extrair insights</a>
 <a href="{% url 'posts:create' pk=object.id %}" class="btn btn-info" role="button">Extrair Posts</a>
 <a href="{% url 'reactions:create' pk=object.id %}" class="btn btn-info" role="button">Extrair Reações</a>
