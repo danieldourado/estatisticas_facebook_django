@@ -67,6 +67,8 @@ def getPostInfo(page_model, since):
     page_model.save()
 
     get_posts(page_model, since)
+    page_model.post_since = since
+    page_model.save()
     #savePostData(page_model, data)
     
     

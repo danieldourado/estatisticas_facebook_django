@@ -1,8 +1,8 @@
 from django.core.urlresolvers import reverse_lazy
 from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView
 from .forms import ReactionForm
-from .models import *
-from django.http import HttpResponse, HttpResponseRedirect
+from .models import Reaction
+
 
 class ReactionList(ListView):
     model = Reaction
