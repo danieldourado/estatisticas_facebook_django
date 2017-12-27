@@ -1,7 +1,7 @@
 from django.db import models
 from django.utils.dateformat import DateFormat, TimeFormat
 from django.core.urlresolvers import reverse
-from estatisticas_facebook.util.graph import getNewGraphApi, debug
+from estatisticas_facebook.util.graph import getNewGraphApi, debug, get_paged_query
 from estatisticas_facebook.pages.models import *
 from estatisticas_facebook.comments.models import *
 from estatisticas_facebook.reactions.models import *
@@ -11,17 +11,8 @@ COMMENTS = 'comments'
 REACTIONS = 'reactions'
 POSTS = 'posts'
 FINISHED = 'finished'
+QUERY = '/posts?fields=id,name,created_time,story,message,permalink_url,shares.summary(count).as(shares),comments.limit(1),reactions.limit(1),comments.limit(0).summary(total_count).as(total_comments),insights.metric(post_reactions_by_type_total)&pretty=false&limit=100&since='
 
-def get_post_query(model, since):
-    
-    default_query = '/posts?fields=id,name,created_time,story,message,permalink_url,shares.summary(count).as(shares),comments.limit(1),reactions.limit(1),comments.limit(0).summary(total_count).as(total_comments),insights.metric(post_reactions_by_type_total)&pretty=false&limit=100&since='+str(since)
-    
-    if model.post_paging is None:
-        return default_query
-    if model.post_paging == FINISHED:
-        return False
-
-    return default_query+'&after='+model.post_paging
 
 def save_paging(model, model_name, paging_json):
 
@@ -49,7 +40,7 @@ def get_item_and_paging(extracting_function, model, model_name, data):
     save_paging(model,model_name, data.get('paging'))
     
     
-def savePostData(page_model, data):
+def save_post_data(page_model, data):
     for post in data:
         insights_values = post['insights']['data'][0]['values'][0]['value']
        
@@ -80,21 +71,21 @@ def savePostData(page_model, data):
             )
         temp_post.save()
         
-        get_item_and_paging(getComments, temp_post, COMMENTS, post.get('comments'))
-        get_item_and_paging(getReactions, temp_post, REACTIONS, post.get('reactions'))
+        get_item_and_paging(save_comment_data, temp_post, COMMENTS, post.get('comments'))
+        get_item_and_paging(save_reaction_data, temp_post, REACTIONS, post.get('reactions'))
         
         debug('new post saved: '+temp_post.id)
 
 def get_posts(page_model, since):
     
-    print(get_post_query(page_model, since))
+    paged_query = get_paged_query(page_model.post_paging, QUERY+str(since))
     
-    if get_post_query(page_model, since):
-        data = getNewGraphApi(page_model.id).get_object(page_model.id+get_post_query(page_model, since))
+    if paged_query:
+        data = getNewGraphApi(page_model.id).get_object(page_model.id+paged_query)
     else:
         return
 
-    get_item_and_paging(savePostData, page_model, POSTS, data)
+    get_item_and_paging(save_post_data, page_model, POSTS, data)
 
     get_posts(page_model, since)
      
