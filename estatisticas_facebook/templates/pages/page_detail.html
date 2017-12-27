@@ -40,7 +40,23 @@
   </tr>
   <tr>
     <td><b>Maior hater:</b></td>
-    <td><a href="https://www.facebook.com/">{{ hater.name}} ({{ hater.post_reactions_angry_total}})</a></td>
+    <td><a href="https://www.facebook.com/{{ hater.id}}">{{ hater.name}} ({{ hater.post_reactions_angry_total}})</a></td>
+  </tr>
+  <tr>
+    <td><b>Maior liker:</b></td>
+    <td><a href="https://www.facebook.com/{{ liker.id}}">{{ liker.name}} ({{ liker.post_reactions_like_total}})</a></td>
+  </tr>
+  <tr>
+    <td><b>Maior lover:</b></td>
+    <td><a href="https://www.facebook.com/{{ lover.id}}">{{ lover.name}} ({{ lover.post_reactions_love_total}})</a></td>
+  </tr>
+  <tr>
+    <td><b>Maior sad:</b></td>
+    <td><a href="https://www.facebook.com/{{ sad.id}}">{{ sad.name}} ({{ sad.post_reactions_sad_total}})</a></td>
+  </tr>
+  <tr>
+    <td><b>Maior commenter:</b></td>
+    <td><a href="https://www.facebook.com/{{ commenter.id}}">{{ commenter.name}} ({{ commenter.comments}})</a></td>
   </tr>
 
 </tbody>

@@ -50,7 +50,11 @@ class PageDetailView(DetailView):
         context['reactions'] = Reaction.objects.filter(post__page__id__iexact=self.kwargs.get("pk")).count()
         context['faceusers'] = FaceUsers.objects.all().count()
         context['hater'] = FaceUsers.objects.all().order_by(Coalesce('post_reactions_angry_total','comments').desc())[0]
-        
+        context['liker'] = FaceUsers.objects.all().order_by(Coalesce('post_reactions_like_total','comments').desc())[0]
+        context['lover'] = FaceUsers.objects.all().order_by(Coalesce('post_reactions_love_total','comments').desc())[0]
+        context['sad'] = FaceUsers.objects.all().order_by(Coalesce('post_reactions_sad_total','comments').desc())[0]
+        context['commenter'] = FaceUsers.objects.all().order_by(Coalesce('comments','post_reactions_sad_total').desc())[0]
+
         print(context)
         return context
         
