@@ -1,45 +1,15 @@
 from django.db import models
 from django.utils.dateformat import DateFormat, TimeFormat
 from django.core.urlresolvers import reverse
-from estatisticas_facebook.util.graph import getNewGraphApi, debug, get_paged_query
+from estatisticas_facebook.util.graph import *
 from estatisticas_facebook.pages.models import *
 from estatisticas_facebook.comments.models import *
 from estatisticas_facebook.reactions.models import *
 from estatisticas_facebook.faceusers.models import *
 
-COMMENTS = 'comments'
-REACTIONS = 'reactions'
-POSTS = 'posts'
-FINISHED = 'finished'
+
 QUERY = '/posts?fields=id,name,created_time,story,message,permalink_url,shares.summary(count).as(shares),comments.limit(1),reactions.limit(1),comments.limit(0).summary(total_count).as(total_comments),insights.metric(post_reactions_by_type_total)&pretty=false&limit=100&since='
 
-
-def save_paging(model, model_name, paging_json):
-
-    if paging_json:
-        cursors_next = paging_json.get('cursors').get('after')
-    else:
-        cursors_next = FINISHED
-        
-    if model_name == COMMENTS:
-        model.comment_paging = cursors_next
-    if model_name == REACTIONS:
-        model.reaction_paging = cursors_next
-    if model_name ==  POSTS:
-        model.post_paging = cursors_next
-    
-    model.save()
-
-
-def get_item_and_paging(extracting_function, model, model_name, data):
-
-    if data is None:
-        return
-    
-    extracting_function(model, data.get('data'))
-    save_paging(model,model_name, data.get('paging'))
-    
-    
 def save_post_data(page_model, data):
     for post in data:
         insights_values = post['insights']['data'][0]['values'][0]['value']
