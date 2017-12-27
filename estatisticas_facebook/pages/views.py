@@ -58,6 +58,9 @@ class PageDetailView(DetailView):
         context['reactions_is_complete'] = "Completo"
         if Post.objects.all().exclude(reaction_paging = FINISHED).exists():
             context['reactions_is_complete'] = "Incompleto"
+        context['comments_is_complete'] = "Completo"
+        if Post.objects.all().exclude(comment_paging = FINISHED).exists():
+            context['comments_is_complete'] = "Incompleto"
         return context
         
     def get_queryset(self):
