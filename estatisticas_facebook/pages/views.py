@@ -6,7 +6,8 @@ from estatisticas_facebook.posts.models import Post
 from estatisticas_facebook.comments.models import Comment
 from estatisticas_facebook.reactions.models import Reaction
 from estatisticas_facebook.faceusers.models import FaceUsers
-
+from util.graph import *
+from django.db.models import Q
 
 import facebook
 import json
@@ -54,7 +55,9 @@ class PageDetailView(DetailView):
         context['lover'] = FaceUsers.objects.all().order_by(Coalesce('post_reactions_love_total','comments').desc())[0]
         context['sad'] = FaceUsers.objects.all().order_by(Coalesce('post_reactions_sad_total','comments').desc())[0]
         context['commenter'] = FaceUsers.objects.all().order_by(Coalesce('comments','post_reactions_sad_total').desc())[0]
-
+        context['reactions_is_complete'] = "Completo"
+        if Post.objects.all().exclude(reaction_paging = FINISHED).exists():
+            context['reactions_is_complete'] = "Incompleto"
         return context
         
     def get_queryset(self):
