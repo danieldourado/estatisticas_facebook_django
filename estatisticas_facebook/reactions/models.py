@@ -4,6 +4,7 @@ from estatisticas_facebook.posts.models import *
 from estatisticas_facebook.faceusers.models import *
 from util.graph import *
 
+
 QUERY = '/reactions?limit=100000'
 
 
