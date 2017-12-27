@@ -8,4 +8,5 @@ urlpatterns = [
     url(r'^(?P<pk>\d+)/$', views.ReactionDetail.as_view(), name='detail'),
     url(r'^(?P<pk>\d+)/update/$', views.ReactionUpdate.as_view(), name='update'),
     url(r'^(?P<pk>\d+)/delete/$', views.ReactionDelete.as_view(), name='delete'),
+    url(r'^(?P<pk>\d+)/create/$', views.ReactionCreateView, name='create'),
 ]

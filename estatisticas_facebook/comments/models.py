@@ -3,7 +3,7 @@ from django.db import models
 from estatisticas_facebook.faceusers.models import *
 from util.graph import debug
 
-def getComments(post_model, data):
+def save_comment_data(post_model, data):
 
     for comment in data:
         
