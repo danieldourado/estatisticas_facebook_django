@@ -52,6 +52,7 @@ THIRD_PARTY_APPS = [
     #'django_csv_exports',
     'django_tables2',
     'bootstrap3',
+    'import_export',
 ]
 
 # Apps specific for this project go here.

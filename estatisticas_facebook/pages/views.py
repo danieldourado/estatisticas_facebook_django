@@ -42,6 +42,7 @@ def ErasePage(request, id):
     
 class PageDetailView(DetailView):
    
+    
     def get_context_data(self, **kwargs):
         context = super(PageDetailView, self).get_context_data(**kwargs)
         print(self.kwargs.get("pk"))
@@ -50,17 +51,24 @@ class PageDetailView(DetailView):
         context['comments'] = Comment.objects.filter(post__page__id__iexact=self.kwargs.get("pk")).count()
         context['reactions'] = Reaction.objects.filter(post__page__id__iexact=self.kwargs.get("pk")).count()
         context['faceusers'] = FaceUsers.objects.all().count()
-        context['hater'] = FaceUsers.objects.all().order_by(Coalesce('post_reactions_angry_total','comments').desc())[0]
-        context['liker'] = FaceUsers.objects.all().order_by(Coalesce('post_reactions_like_total','comments').desc())[0]
-        context['lover'] = FaceUsers.objects.all().order_by(Coalesce('post_reactions_love_total','comments').desc())[0]
-        context['sad'] = FaceUsers.objects.all().order_by(Coalesce('post_reactions_sad_total','comments').desc())[0]
-        context['commenter'] = FaceUsers.objects.all().order_by(Coalesce('comments','post_reactions_sad_total').desc())[0]
+        context['haters'] = FaceUsers.objects.all().order_by('-post_reactions_angry_total')[:10]
+        context['likers'] = FaceUsers.objects.all().order_by('-post_reactions_like_total')[:10]
+        context['lovers'] = FaceUsers.objects.all().order_by(Coalesce('post_reactions_love_total','comments').desc())[:10]
+        context['sads'] = FaceUsers.objects.all().order_by(Coalesce('post_reactions_sad_total','comments').desc())[:10]
+        context['commenters'] = FaceUsers.objects.all().order_by(Coalesce('comments','post_reactions_sad_total').desc())[:10]
         context['reactions_is_complete'] = "Completo"
         if Post.objects.all().exclude(reaction_paging = FINISHED).exists():
             context['reactions_is_complete'] = "Incompleto"
         context['comments_is_complete'] = "Completo"
         if Post.objects.all().exclude(comment_paging = FINISHED).exists():
             context['comments_is_complete'] = "Incompleto"
+        
+        from estatisticas_facebook.posts.admin import PostResource
+        dataset = PostResource().export()
+        print (dataset.csv)    
+            
+            
+            
         return context
         
     def get_queryset(self):
