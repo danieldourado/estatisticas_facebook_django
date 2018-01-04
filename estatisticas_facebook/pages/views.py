@@ -50,6 +50,12 @@ class PageDetailView(DetailView):
         context['posts'] = Post.objects.filter(page__id__iexact=self.kwargs.get("pk")).count()
         context['comments'] = Comment.objects.filter(post__page__id__iexact=self.kwargs.get("pk")).count()
         context['reactions'] = Reaction.objects.filter(post__page__id__iexact=self.kwargs.get("pk")).count()
+        context['reactions_like'] = Reaction.objects.filter(post__page__id__iexact=self.kwargs.get("pk"), type="LIKE").count()
+        context['reactions_love'] = Reaction.objects.filter(post__page__id__iexact=self.kwargs.get("pk"), type="LOVE").count()
+        context['reactions_haha'] = Reaction.objects.filter(post__page__id__iexact=self.kwargs.get("pk"), type="HAHA").count()
+        context['reactions_wow'] = Reaction.objects.filter(post__page__id__iexact=self.kwargs.get("pk"), type="WOW").count()
+        context['reactions_sad'] = Reaction.objects.filter(post__page__id__iexact=self.kwargs.get("pk"), type="SAD").count()
+        context['reactions_angry'] = Reaction.objects.filter(post__page__id__iexact=self.kwargs.get("pk"), type="ANGRY").count()
         context['faceusers'] = FaceUsers.objects.all().count()
         context['haters'] = FaceUsers.objects.all().order_by('-post_reactions_angry_total')[:10]
         context['likers'] = FaceUsers.objects.all().order_by('-post_reactions_like_total')[:10]
@@ -62,11 +68,14 @@ class PageDetailView(DetailView):
         context['comments_is_complete'] = "Completo"
         if Post.objects.all().exclude(comment_paging = FINISHED).exists():
             context['comments_is_complete'] = "Incompleto"
+            
+        print(context['reactions_like'])
         
+        '''
         from estatisticas_facebook.posts.admin import PostResource
         dataset = PostResource().export()
         print (dataset.csv)    
-            
+        '''    
             
             
         return context

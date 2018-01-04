@@ -33,11 +33,35 @@
         <td>{{ reactions}}({{reactions_is_complete}})</td>
       </tr>
       <tr>
+        <td><b>Reactions (Like) Total:</b></td>
+        <td>{{ reactions_like}}</td>
+      </tr>
+      <tr>
+        <td><b>Reactions (Love) Total:</b></td>
+        <td>{{ reactions_love}}</td>
+      </tr>
+      <tr>
+        <td><b>Reactions (Haha) Total:</b></td>
+        <td>{{ reactions_haha}}</td>
+      </tr>
+      <tr>
+        <td><b>Reactions (Wow) Total:</b></td>
+        <td>{{ reactions_wow}}</td>
+      </tr>
+      <tr>
+        <td><b>Reactions (Sad) Total:</b></td>
+        <td>{{ reactions_sad}}</td>
+      </tr>
+      <tr>
+        <td><b>Reactions (Angry) Total:</b></td>
+        <td>{{ reactions_angry}}</td>
+      </tr>
+      <tr>
         <td><b>Usuários:</b></td>
         <td>{{ faceusers }}</td>
       </tr>
       <tr>
-        <td><b>Maiores haters:</b></td>
+        <td><b>Top 10 angry:</b></td>
         <td>
           <ul>
           {% for hater in haters %}
@@ -47,7 +71,7 @@
         </td>
       </tr>
       <tr>
-        <td><b>Maiores likers:</b></td>
+        <td><b>Top 10 like:</b></td>
         <td>
           <ul>
           {% for liker in likers %}
@@ -57,7 +81,7 @@
         </td>
       </tr>
       <tr>
-        <td><b>Maiores lovers:</b></td>
+        <td><b>Top 10 love:</b></td>
         <td>
           <ul>
           {% for lover in lovers %}
@@ -67,7 +91,7 @@
         </td>
       </tr>
       <tr>
-        <td><b>Maiores sads:</b></td>
+        <td><b>Top 10 sad:</b></td>
         <td>
           <ul>
           {% for sad in sads %}

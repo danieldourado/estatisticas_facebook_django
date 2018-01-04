@@ -1,6 +1,7 @@
 from django.core.urlresolvers import reverse
 from django.db import models
 import facebook
+import datetime
 import urllib.request, json
 from estatisticas_facebook.tokens.models import *
 
@@ -29,7 +30,17 @@ def saveAccessToken(access_token):
 def getNewAccessToken(page_name):
     access_token = makeAccessTokenLongLived(getShortLivedAccessToken(page_name))
     saveAccessToken(access_token)
+    print("Token fetched: "+access_token)
     return access_token
+    
+def getAccessToken(page_name):
+    date_limit = datetime.date.today() + datetime.timedelta(days=1)
+    tokens = Token.objects.filter(created__range=(datetime.date.today(), date_limit))
+    for token in tokens:
+        print("Token recovered: "+token.name)
+        return token.name
+    
+    return getNewAccessToken(page_name)
     
 class Token(models.Model):
     name = models.CharField(max_length=255)

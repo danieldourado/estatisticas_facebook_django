@@ -2,7 +2,7 @@ from django.db import models
 from django.db.models.signals import pre_save, post_save
 from .utils import unique_slug_generator
 from django.utils.dateformat import DateFormat, TimeFormat
-from util.graph import * 
+from util.graph_tornado import * 
 
 def getPageInfo(page):
     raw_json = getNewGraphApi(page.name).get_object(page.name)
