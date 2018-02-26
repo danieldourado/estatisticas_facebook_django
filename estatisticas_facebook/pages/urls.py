@@ -34,6 +34,13 @@ urlpatterns = [
         view= PageInsightsCreateView,
         name='insights-create'
     ),
+
+    url(
+        regex=r'^page_insights/create/(?P<id>\w+)/(?P<since>[\w-]+)/$',
+        view= PageInsightsCreateViewCron,
+        name='insights-create'
+    ),
+    
     url(
         regex=r'^page_insights/(?P<id>\w+)/$',
         view= PageInsightsListView,

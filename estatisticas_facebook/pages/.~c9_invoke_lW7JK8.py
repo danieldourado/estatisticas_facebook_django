@@ -11,7 +11,7 @@ from django.db.models import Q
 
 import facebook
 import json
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, Response
 from django.db.models import Q
 from .forms import *
 from django.core.urlresolvers import reverse
@@ -141,10 +141,15 @@ def PageInsightsCreateView(request, **kwargs):
 def PageInsightsCreateViewCron(request, **kwargs):
     args = {}
     args['since'] = kwargs['since']
-    args['id'] = kwargs['id']
-    getPageInsights(args)
-    return HttpResponse("Success")
+    args['id'] = kwargs['Id']
+    print (str(kargs)
+    retun
 
+    print (str(args))
+    
+    return HttpResponse({})
+    
+    getPageInsights(args)
     
 
 class PageInsightsDetailView(DetailView):
