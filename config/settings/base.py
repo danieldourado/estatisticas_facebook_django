@@ -16,7 +16,7 @@ APPS_DIR = ROOT_DIR.path('estatisticas_facebook')
 env = environ.Env()
 
 # .env file, should load only in development environment
-READ_DOT_ENV_FILE = env.bool('DJANGO_READ_DOT_ENV_FILE', default=False)
+READ_DOT_ENV_FILE = env.bool('DJANGO_READ_DOT_ENV_FILE', default=True)
 
 if READ_DOT_ENV_FILE:
     # Operating System Environment variables have precedence over variables defined in the .env file,
@@ -123,13 +123,8 @@ MANAGERS = ADMINS
 # Uses django-environ to accept uri format
 # See: https://django-environ.readthedocs.io/en/latest/#supported-types
 DATABASES = {
-    #'default': env.db('DATABASE_URL', default='postgres:///estatisticas_facebook'),
-    
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': 'mydatabase',
-    }
-    
+    'default': env.db('DATABASE_URL', default='postgres:///estatisticas_facebook'),
+
 }
 DATABASES['default']['ATOMIC_REQUESTS'] = True
 
