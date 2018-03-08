@@ -34,9 +34,9 @@ def getPageInsights(args):
 # Create your models here.
 class Page(models.Model):
     id              = models.CharField(primary_key = True, max_length = 45)
-    name            = models.CharField(max_length = 4000, unique=True)
-    pretty_name     = models.CharField(max_length = 4000,null=True, blank=True)
-    access_token    = models.CharField(max_length = 4500,null=True, blank=True)
+    name            = models.CharField(max_length = 18000, unique=True)
+    pretty_name     = models.CharField(max_length = 18000,null=True, blank=True)
+    access_token    = models.CharField(max_length = 18000,null=True, blank=True)
     created         = models.DateTimeField(auto_now_add=True)
     slug            = models.SlugField(null=True, blank=True)
     post_paging     = models.CharField(max_length = 512, null=True)

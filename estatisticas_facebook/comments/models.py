@@ -52,7 +52,7 @@ def save_comment_data(post_model, data):
 
 class Comment(models.Model):
     id              = models.CharField      (primary_key = True, max_length = 45)
-    message         = models.CharField      (max_length = 4500, default="")
+    message         = models.CharField      (max_length = 18000, default="")
     created_time    = models.DateTimeField  (null=True)
     post            = models.ForeignKey     ('posts.Post', null=True, on_delete=models.CASCADE)
     user            = models.ForeignKey     (FaceUsers, null=True)
