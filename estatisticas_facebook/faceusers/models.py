@@ -48,7 +48,7 @@ class FaceUsers(models.Model):
     post_reactions_positivo_porcentagem     = models.IntegerField(default=0)
     post_reactions_negativo_porcentagem     = models.IntegerField(default=0)
     permalink_url                           = models.CharField(max_length = 450, default="")
-
+    created                                 = models.DateTimeField(auto_now_add=True)
     def __str__(self):
         return self.id
 

@@ -1,5 +1,9 @@
 from django.core.management.base import BaseCommand, CommandError
 from estatisticas_facebook.pages.models import *
+from estatisticas_facebook.posts.models import getPostInfo
+from estatisticas_facebook.comments.models import getCommentInfo
+from estatisticas_facebook.reactions.models import getReactionInfo
+
 
 class Command(BaseCommand):
     help = 'Save page insights'
@@ -19,4 +23,7 @@ class Command(BaseCommand):
         args['since'] = str(options['since'])
         args['id'] = '316136345150243'
         getPageInsights(args)
-        
+        page_model = Page.objects.get(id__iexact=args['id'])
+        getPostInfo(page_model,args['since'])
+        getCommentInfo(page_model)
+        getReactionInfo(page_model)

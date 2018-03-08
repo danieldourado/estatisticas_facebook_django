@@ -6,6 +6,7 @@ from estatisticas_facebook.pages.models import *
 from estatisticas_facebook.comments.models import *
 from estatisticas_facebook.reactions.models import *
 from estatisticas_facebook.faceusers.models import *
+import dateutil.parser
 
 
 QUERY = '/posts?fields=id,name,created_time,story,message,permalink_url,shares.summary(count).as(shares),comments.limit(1),reactions.limit(1),comments.limit(0).summary(total_count).as(total_comments),insights.metric(post_reactions_by_type_total)&pretty=false&limit=100&since='
@@ -65,8 +66,10 @@ def getPostInfo(page_model, since):
     FaceUsers.objects.all().delete()
     page_model.post_paging = None
     page_model.save()
+    
 
     get_posts(page_model, since)
+    since = dateutil.parser.parse(since+' 01:00:00-00')
     page_model.post_since = since
     page_model.save()
     #savePostData(page_model, data)
@@ -89,12 +92,12 @@ class Post(models.Model):
     post_reactions_positivo_porcentagem     = models.IntegerField(default=0)
     post_reactions_negativo_porcentagem     = models.IntegerField(default=0)
     created_time                            = models.CharField(max_length = 45, null=True)
-    message                                 = models.CharField(max_length = 4500, null=True)
+    message                                 = models.CharField(max_length = 18000, null=True)
     permalink_url                           = models.CharField(max_length = 450, default="")
-    created                                 = models.DateTimeField(auto_now_add=True)
     name                                    = models.CharField(max_length = 450, default="")
     reaction_paging                         = models.CharField(max_length = 512, null=True)
     comment_paging                          = models.CharField(max_length = 512, null=True)
+    created                                 = models.DateTimeField(auto_now_add=True)
     
     def __str__(self):
         return self.id

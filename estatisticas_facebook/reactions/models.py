@@ -59,7 +59,7 @@ class Reaction(models.Model):
     user                                    = models.ForeignKey(FaceUsers, null=True)
     post                                    = models.ForeignKey('posts.Post', null=True, on_delete=models.CASCADE)
     name                                    = models.CharField(max_length = 512, default="")
-
+    created                                 = models.DateTimeField(auto_now_add=True)
     def __str__(self):
         return self.type
 

@@ -58,7 +58,7 @@ class Comment(models.Model):
     user            = models.ForeignKey     (FaceUsers, null=True)
     permalink_url   = models.CharField      (max_length = 450, default="")
     name            = models.CharField      (max_length = 450, default="")
-
+    created         = models.DateTimeField(auto_now_add=True)
     def __str__(self):
         return self.id
 
