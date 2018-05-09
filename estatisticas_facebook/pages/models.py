@@ -11,7 +11,8 @@ def getPageInfo(page):
     page.id = raw_json['id']
 
 def getPageInsights(args):
-
+    
+    PageInsights.objects.all().delete()
     since = args['since']
     raw_json = get_graph_object(args['id'],args['id']+'/insights?period=day&metric=page_fan_adds_unique,page_impressions_unique,page_engaged_users,page_stories,page_storytellers&since='+str(since))
     
