@@ -9,16 +9,47 @@ from estatisticas_facebook.faceusers.models import *
 import dateutil.parser
 
 
-QUERY = '/posts?fields=id,name,created_time,story,message,permalink_url,shares.summary(count).as(shares),comments.limit(1),reactions.limit(1),comments.limit(0).summary(total_count).as(total_comments),insights.metric(post_reactions_by_type_total)&pretty=false&limit=100&since='
+QUERY = '/posts?fields=id,name,created_time,story,message,permalink_url,shares.summary(count).as(shares),comments.limit(1),comments.limit(0).summary(total_count).as(total_comments),insights.metric(post_reactions_by_type_total,post_impressions,post_impressions_unique)&pretty=false&limit=100&since='
 
 def save_post_data(page_model, data):
     for post in data:
-        insights_values = post['insights']['data'][0]['values'][0]['value']
+        
+        for insight in post['insights']['data']:
+            key = insight['name']
+            if 'post_reactions_by_type_total' == key:
+                post_reactions_by_type_total = insight['values'][0]['value']
+            if 'post_impressions' == key:
+                post_impressions = insight['values'][0]['value']
+            if 'post_impressions_unique' == key:
+                post_impressions_unique = insight['values'][0]['value']
        
         shares = 0    
         if post.get('shares') is not None:
             shares = post['shares']['count']
             
+        post_reactions_like_total = post_reactions_by_type_total['like']
+        post_reactions_love_total = post_reactions_by_type_total['love']
+        post_reactions_wow_total = post_reactions_by_type_total['wow']
+        post_reactions_haha_total = post_reactions_by_type_total['haha']
+        post_reactions_sorry_total = post_reactions_by_type_total['sorry']
+        post_reactions_anger_total = post_reactions_by_type_total['anger']
+    
+        total_reactions=post_reactions_like_total+post_reactions_love_total+post_reactions_wow_total+post_reactions_haha_total+post_reactions_sorry_total+post_reactions_anger_total
+            
+        total_comments = post.get('total_comments').get('summary').get('total_count')
+        engajamento = total_reactions+shares+total_comments
+        taxa_de_engajamento=0
+        if post_impressions != 0:
+            taxa_de_engajamento = (engajamento/post_impressions)*100
+        post_reactions_positivo_total = post_reactions_like_total+post_reactions_love_total+post_reactions_wow_total+shares
+        post_reactions_negativo_total = post_reactions_anger_total+post_reactions_haha_total+post_reactions_sorry_total+total_comments
+        positivo_mais_negativo = post_reactions_positivo_total+post_reactions_negativo_total
+        post_reactions_positivo_porcentagem=0
+        post_reactions_negativo_porcentagem=0
+        if positivo_mais_negativo != 0:
+        	post_reactions_positivo_porcentagem = post_reactions_positivo_total/positivo_mais_negativo*100
+        	post_reactions_negativo_porcentagem = post_reactions_negativo_total/positivo_mais_negativo*100
+        
         temp_post = Post(
             page = page_model,
             id = post.get('id'),
@@ -26,19 +57,22 @@ def save_post_data(page_model, data):
             message = post.get('message'),
             permalink_url = post.get('permalink_url'),
             shares = shares,
-            total_comments = post['total_comments']['summary']['total_count'],
-            post_reactions_like_total = insights_values.get('like'),
-            post_reactions_love_total = insights_values.get('love'),
-            post_reactions_wow_total = insights_values.get('wow'),
-            post_reactions_haha_total = insights_values.get('haha'),
-            post_reactions_sorry_total = insights_values.get('sorry'),
-            post_reactions_anger_total = insights_values.get('anger'),
-            reactions   =insights_values['like']
-                        +insights_values['love']
-                        +insights_values['wow']
-                        +insights_values['haha']
-                        +insights_values['sorry']
-                        +insights_values['anger'],
+            total_comments = total_comments,
+            post_reactions_like_total = post_reactions_like_total,
+            post_reactions_love_total = post_reactions_love_total,
+            post_reactions_wow_total = post_reactions_wow_total,
+            post_reactions_haha_total = post_reactions_haha_total,
+            post_reactions_sorry_total = post_reactions_sorry_total,
+            post_reactions_anger_total = post_reactions_anger_total,
+            post_reactions_positivo_total=post_reactions_positivo_total,
+            post_reactions_negativo_total=post_reactions_negativo_total,
+            post_reactions_positivo_porcentagem=post_reactions_positivo_porcentagem,
+            post_reactions_negativo_porcentagem=post_reactions_negativo_porcentagem,
+            reactions = total_reactions,
+            post_impressions=post_impressions,
+            post_impressions_unique=post_impressions_unique,
+            engajamento=engajamento,
+            taxa_de_engajamento=taxa_de_engajamento,
             )
         temp_post.save()
         
@@ -52,7 +86,7 @@ def get_posts(page_model, since):
     paged_query = get_paged_query(page_model.post_paging, QUERY+str(since))
     
     if paged_query:
-        data = getNewGraphApi(page_model.id).get_object(page_model.id+paged_query)
+        data = get_graph_object(page_model.id,page_model.id+paged_query)
     else:
         return
 
@@ -67,7 +101,6 @@ def getPostInfo(page_model, since):
     page_model.post_paging = None
     page_model.save()
     
-
     get_posts(page_model, since)
     since = dateutil.parser.parse(since+' 01:00:00-00')
     page_model.post_since = since
@@ -89,11 +122,15 @@ class Post(models.Model):
     post_reactions_anger_total              = models.IntegerField(default=0)
     post_reactions_positivo_total           = models.IntegerField(default=0)
     post_reactions_negativo_total           = models.IntegerField(default=0)
-    post_reactions_positivo_porcentagem     = models.IntegerField(default=0)
-    post_reactions_negativo_porcentagem     = models.IntegerField(default=0)
+    post_reactions_positivo_porcentagem     = models.FloatField(default=0)
+    post_reactions_negativo_porcentagem     = models.FloatField(default=0)
+    post_impressions                        = models.IntegerField(default=0)
+    post_impressions_unique                 = models.IntegerField(default=0)
+    engajamento                             = models.IntegerField(default=0)
+    taxa_de_engajamento                     = models.FloatField(default=0)
     created_time                            = models.CharField(max_length = 45, null=True)
     message                                 = models.CharField(max_length = 18000, null=True)
-    permalink_url                           = models.CharField(max_length = 450, default="")
+    permalink_url                           = models.CharField(max_length = 450, null=True)
     name                                    = models.CharField(max_length = 450, default="")
     reaction_paging                         = models.CharField(max_length = 512, null=True)
     comment_paging                          = models.CharField(max_length = 512, null=True)

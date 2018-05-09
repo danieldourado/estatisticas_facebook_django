@@ -2,7 +2,7 @@ from django.core.urlresolvers import reverse
 from django.db import models
 from estatisticas_facebook.posts.models import *
 from estatisticas_facebook.faceusers.models import *
-from util.graph_tornado import *
+from estatisticas_facebook.util.graph import *
 
 
 QUERY = '/reactions?limit=100000'
@@ -13,7 +13,7 @@ def get_reactions(post):
     paged_query = get_paged_query(post.reaction_paging, QUERY)
     
     if paged_query:
-        data = getNewGraphApi(post.page.id).get_object(post.id+paged_query)
+        data = get_graph_object(post.page.id,post.id+paged_query)
     else:
         return
 
@@ -26,13 +26,9 @@ def getReactionInfo(page_model):
     from estatisticas_facebook.posts.models import Post
     post_list = Post.objects.filter(page = page_model).all()
 
-    i = 0
     for post in post_list:
         if post.reaction_paging is not None and post.reaction_paging != FINISHED:
-            i = i+1
             get_reactions(post)
-            if i > 70:
-                return
 
 def get_user_object_from_reaction_json(reaction):
     user = {}

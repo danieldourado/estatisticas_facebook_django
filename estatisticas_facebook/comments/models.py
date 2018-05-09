@@ -1,17 +1,16 @@
 from django.core.urlresolvers import reverse
 from django.db import models
 from estatisticas_facebook.faceusers.models import *
-from util.graph_tornado import *
+from estatisticas_facebook.util.graph import *
 
 QUERY = '/comments?limit=1000'
 
 
 def get_comments(post):
-    print(post)
     paged_query = get_paged_query(post.comment_paging, QUERY)
   
     if paged_query:
-        data = getNewGraphApi(post.page.id).get_object(post.id+paged_query)
+        data = get_graph_object(post.page.id,post.id+paged_query)
     else:
         return
 
@@ -24,20 +23,15 @@ def getCommentInfo(page_model):
     from estatisticas_facebook.posts.models import Post
     post_list = Post.objects.filter(page = page_model).all()
 
-    i=0
     for post in post_list:
         if post.comment_paging != FINISHED:
             get_comments(post)
-            i=i+1
-            if i > 70:
-                return
-
 
 def save_comment_data(post_model, data):
 
     for comment in data:
         
-        user = addInteraction(comment.get('from'), 'comments')
+        #user = addInteraction(comment.get('from'), 'comments')
         
         Comment(
             post = post_model,
@@ -45,7 +39,7 @@ def save_comment_data(post_model, data):
             created_time = comment.get('created_time'),
             message = comment.get('message'),
             permalink_url = 'https://facebook.com/'+comment.get('id'),
-            user = user,
+            #user = user,
             ).save()
         
         #debug('new comment saved: '+comment.get('id'))

@@ -1,6 +1,6 @@
 from django.core.urlresolvers import reverse
 from django.db import models
-from util.graph_tornado import debug
+from estatisticas_facebook.util.graph import *
 
 def getFaceUser(user_json):
     temp_user, created = FaceUsers.objects.get_or_create(id=user_json.get('id'))    

@@ -2,7 +2,7 @@ from django.db import models
 from django.db.models.signals import pre_save, post_save
 from .utils import unique_slug_generator
 from django.utils.dateformat import DateFormat, TimeFormat
-from util.graph_tornado import * 
+from estatisticas_facebook.util.graph import *
 
 def getPageInfo(page):
     raw_json = getNewGraphApi(page.name).get_object(page.name)
@@ -13,7 +13,7 @@ def getPageInfo(page):
 def getPageInsights(args):
 
     since = args['since']
-    raw_json = getNewGraphApi(args['id']).get_object(args['id']+'/insights?period=day&metric=page_fan_adds_unique,page_impressions_unique,page_engaged_users,page_stories,page_storytellers&since='+str(since))
+    raw_json = get_graph_object(args['id'],args['id']+'/insights?period=day&metric=page_fan_adds_unique,page_impressions_unique,page_engaged_users,page_stories,page_storytellers&since='+str(since))
     
     pagedata = raw_json['data']
 

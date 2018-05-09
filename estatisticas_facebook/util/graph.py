@@ -1,6 +1,7 @@
 import facebook
 from estatisticas_facebook.pages.models import *
 from estatisticas_facebook.tokens.models import *
+import time
 
 debug_posts = True
 debug_reactions = False
@@ -15,10 +16,26 @@ def debug(message):
     if debug_posts:
         print(message)
         
-        
 def getNewGraphApi(page_name):
-    return facebook.GraphAPI(getNewAccessToken(page_name))
+    #return facebook.GraphAPI(getNewAccessToken(page_name))
+    return facebook.GraphAPI(access_token=getNewAccessToken(page_name), version = 2.9)
 
+def get_graph_object(page_name, query, amount_of_tries = 0):
+    data = None
+    if amount_of_tries > 3:
+        debug('Max amount of retries on object: '+query)
+        return None
+    try:
+        debug('Getting object: '+query)
+        data = getNewGraphApi(page_name).get_object(query)
+    except Exception as e:
+        print(e)
+        amount_of_tries += 1
+        debug('Try: '+str(amount_of_tries)+'Error getting object: '+query)
+        time.sleep(2**amount_of_tries)
+        return get_graph_object(page_name, query, amount_of_tries)
+    return data
+    
 def get_paged_query(paging, query):
 
     if paging is None:
@@ -49,6 +66,9 @@ def get_item_and_paging(extracting_function, model, model_name, data):
 
     if data is None:
         return
+    
+    if type(data) is str:
+        print('data is str',data,str(extracting_function),str(model),str(model_name))
     
     extracting_function(model, data.get('data'))
     save_paging(model,model_name, data.get('paging'))
