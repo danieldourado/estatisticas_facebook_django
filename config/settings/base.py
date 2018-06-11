@@ -49,7 +49,7 @@ THIRD_PARTY_APPS = [
     'allauth',  # registration
     'allauth.account',  # registration
     'allauth.socialaccount',  # registration
-    #'django_csv_exports',
+    'django_csv_exports',
     'bootstrap3',
 ]
 
