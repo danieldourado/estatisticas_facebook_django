@@ -69,7 +69,7 @@ typing==3.6.2
 unicodecsv==0.14.1
 Unidecode==0.4.21
 urllib3==1.22
-waitress==1.1.0
+waitress==1.4.0
 WebOb==1.7.4
 WebTest==2.0.29
 whichcraft==0.4.1
