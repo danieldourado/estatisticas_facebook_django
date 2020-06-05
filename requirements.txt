@@ -13,7 +13,7 @@ constantly==15.1.0
 cookiecutter==1.6.0
 defusedxml==0.5.0
 diff-match-patch==20110725.1
-Django==1.10.8
+Django==1.11.29
 django-allauth==0.34.0
 django-bootstrap3==9.1.0
 django-crispy-forms==1.7.0
