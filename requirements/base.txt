@@ -1,5 +1,5 @@
 Django==1.10.8
-Jinja2==2.10
+Jinja2==2.11.3
 MarkupSafe==1.0
 Pillow==4.3.0
 Unidecode==0.04.21
